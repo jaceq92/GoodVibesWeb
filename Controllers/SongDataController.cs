@@ -85,5 +85,34 @@ namespace GoodVibesWeb.Controllers
                 return response;
             }
         }
+
+        [Route("api/deletesong/{username}/{song_url}")]
+        [HttpDelete]
+        public HttpResponseMessage Delete(string username, string song_url)
+        {
+            try
+            {
+                using (SqlConnection sc = new SqlConnection(sConn))
+                {
+
+                    sc.Open();
+                    string sql = "Delete from song_data where song_url = @song_url and username = @username";
+                    SqlCommand com = new SqlCommand(sql, sc);
+                    com.Parameters.AddWithValue("@song_url", song_url);
+                    com.Parameters.AddWithValue("@username", username);
+                    com.ExecuteNonQuery();
+                }
+
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent("Song deleted", Encoding.UTF8, "application/json");
+
+                return response;
+            }
+            catch
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                return response;
+            }
+        }
     }
 }

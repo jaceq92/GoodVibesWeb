@@ -59,16 +59,14 @@ input, button, select {
 #progressBar {
 width: 960px;
 height: 15px;
-background-color: #c4e2ff;
-display: none;
+background-color: #2e6fa7;
 margin-top: 1px;
 }
 
 #progressBar div {
 
 height: 100%;
-width: 0;
-background-color: #ffffff;
+background-color: #1d2329;
 }
 /* Wrapper for page content to push down footer */
 #wrap {
@@ -85,7 +83,31 @@ background-color: #ffffff;
   height: 60px;
   background-color: #f5f5f5;
 }
+.navbar-fixed-left {
+  width: 140px;
+  position: fixed;
+  border-radius: 0;
+  height: 100%;
+}
 
+.navbar-fixed-left .navbar-nav > li {
+  float: none;  /* Cancel default li float: left */
+  width: 139px;
+}
+
+.navbar-fixed-left + .container {
+  padding-left: 160px;
+}
+
+/* On using dropdown menu (To right shift popuped) */
+.navbar-fixed-left .navbar-nav > li > .dropdown-menu {
+  margin-top: -50px;
+  margin-left: 140px;
+}
+.hide
+{
+   display:none;
+}
 
 /* Custom page CSS
 -------------------------------------------------- */
@@ -132,3 +154,4 @@ iframe[name='demo'] {
     height: 100%;
     border: none;
 }
+

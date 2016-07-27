@@ -16,7 +16,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/23/2016 21:46:46</publishTime>
     </File>
     <File Include="bin/GoodVibesWeb.dll">
-      <publishTime>07/26/2016 22:46:03</publishTime>
+      <publishTime>07/27/2016 20:48:55</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -118,7 +118,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/25/2016 18:13:57</publishTime>
     </File>
     <File Include="css/bootstrap-theme.min.css">
-      <publishTime>07/25/2016 18:13:57</publishTime>
+      <publishTime>07/27/2016 20:21:33</publishTime>
     </File>
     <File Include="css/bootstrap-theme.min.css.map">
       <publishTime>07/25/2016 18:13:57</publishTime>
@@ -130,13 +130,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/25/2016 18:13:57</publishTime>
     </File>
     <File Include="css/bootstrap.min.css">
-      <publishTime>07/25/2016 18:13:57</publishTime>
+      <publishTime>07/27/2016 20:16:21</publishTime>
     </File>
     <File Include="css/bootstrap.min.css.map">
       <publishTime>07/25/2016 18:13:57</publishTime>
     </File>
     <File Include="css/demos.css">
-      <publishTime>07/25/2016 19:46:50</publishTime>
+      <publishTime>07/27/2016 20:40:14</publishTime>
     </File>
     <File Include="css/jsgrid-theme.min.css">
       <publishTime>07/25/2016 17:32:15</publishTime>
@@ -164,6 +164,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="packages.config">
       <publishTime>07/24/2016 20:59:55</publishTime>
+    </File>
+    <File Include="Resources/bg.jpg">
+      <publishTime>07/27/2016 18:51:10</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>07/23/2016 21:10:09</publishTime>
@@ -253,7 +256,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/23/2016 21:50:07</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>07/26/2016 22:45:27</publishTime>
+      <publishTime>07/27/2016 20:48:45</publishTime>
     </File>
     <File Include="Views/web.config">
       <publishTime>07/23/2016 21:46:42</publishTime>
