@@ -32,22 +32,33 @@
     <script src="../scripts/jsgrid.field.control.js"></script>
 </head>
 
-<body class="w3-container w3-center w3-animate-opacity"">
-    
-    <div class="navbar navbar-inverse navbar-fixed-left" style="float:left; margin-top:0.5%; max-width:15%;">
-        <a class="navbar-brand">GoodVibes</a>
+<body class="w3-container w3-center w3-animate-opacity">
+
+    <div class="navbar navbar-default" style="margin-top:0.15%; margin-right:15%; margin-left:18.5%;">
+
         <ul class="nav navbar-nav">
             <li><a style="float:left;" data-toggle="modal" role="button" data-target="#myModal">Add song</a></li>
             <li><a style="float:left;" onclick="deleterow()" role="button">Delete song</a></li>
-            <li><a style="float:left;" role="button"onclick="hideplayer()">Show/Hide Video</a></li>
+            <li><a style="float:left;" role="button" onclick="hideplayer()">Show/Hide Video</a></li>
             <li><a style="float:left;" role="button" onclick="gofullscreen()">Fullscreen</a></li>
             <li><a style="float:left;" role="button">Help</a></li>
         </ul>
     </div>
+    
+    <div class="navbar navbar-default navbar-fixed-left" style="float:left; max-height:70%; margin-left:10%; margin-top:0.05%; max-width:15%;">
+        <ul class="nav navbar-nav">
+            <li><a class="navbar-brand">Playlists</a></li> 
+            <li><a style="float:left;" onclick="onclick123()" role="button">Starred</a></li>
+            <li><a style="float:left;" role="button">Metal</a></li>
+            <li><a style="float:left;" role="button">Hiphop</a></li>
+            <li><a style="float:left;" role="button">Bilelista</a></li>
+            <li><a style="float:left;" role="button">Punttimusat</a></li>
+        </ul>
+    </div>
 
-    <div id="jsGrid" style="margin-top:2.5%; margin-left:5%; max-width:33%; float:left;"></div>
-    <div id="player" style="margin-right:15%; margin-top:2.5%; max-width:33%; float:right;"></div>
-
+    <div id="jsGrid" style="margin-top:0.05%; margin-left:1%; max-width:33%; float:left;"></div>
+    <div id="player" style="margin-right:15%; margin-top:0.05%; max-width:33%; float:right;"></div>
+        
 
 
     <div class="navbar navbar-default navbar-fixed-bottom">
@@ -173,9 +184,9 @@
                 }
             });
         }
-        
-        
 
+        
+        
         $(function () {
             $("#jsGrid").jsGrid({
                 height: "70%",
@@ -235,7 +246,6 @@
             player = new YT.Player('player', {
                 height: '70%',
                 width: '75%',
-                videoId: '',
 
                 events: {
                     'onReady': onPlayerReady,
@@ -253,7 +263,11 @@
 
         // 4. The API will call this function when the video player is ready.
         function onPlayerReady(event) {
-            event.target.playVideo();
+            var row = $(".jsgrid-row:first");
+            console.log(row);
+            row[0].className += ' selected-row';
+
+            player.loadVideoById(row[0].firstChild.innerText, 0, 'large');
         }
 
         function onPlayerStateChange(event) {
@@ -285,6 +299,9 @@
         function stopVideo() {
             player.stopVideo();
         }
+            
+    
+
     </script>
 </body>
 </html>

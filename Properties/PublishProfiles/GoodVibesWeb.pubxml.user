@@ -256,7 +256,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/23/2016 21:50:07</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>07/27/2016 20:48:45</publishTime>
+      <publishTime>07/27/2016 22:13:24</publishTime>
     </File>
     <File Include="Views/web.config">
       <publishTime>07/23/2016 21:46:42</publishTime>
