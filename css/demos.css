@@ -58,7 +58,7 @@ input, button, select {
 
 #progressBar {
 width: 960px;
-height: 15px;
+height: 30px;
 background-color: #2e6fa7;
 margin-top: 1px;
 }

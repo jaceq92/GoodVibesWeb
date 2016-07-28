@@ -136,7 +136,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/25/2016 18:13:57</publishTime>
     </File>
     <File Include="css/demos.css">
-      <publishTime>07/28/2016 20:38:59</publishTime>
+      <publishTime>07/28/2016 21:59:35</publishTime>
     </File>
     <File Include="css/jsgrid-theme.min.css">
       <publishTime>07/25/2016 17:32:15</publishTime>
@@ -256,7 +256,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/23/2016 21:50:07</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>07/28/2016 21:29:08</publishTime>
+      <publishTime>07/28/2016 23:21:14</publishTime>
     </File>
     <File Include="Views/web.config">
       <publishTime>07/23/2016 21:46:42</publishTime>
