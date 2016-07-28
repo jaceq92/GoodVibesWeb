@@ -30,6 +30,7 @@
 }
 
 .jsgrid-grid-body {
+    background-color: white;
     width: 100%;
     overflow-x: auto;
     overflow-y: scroll;

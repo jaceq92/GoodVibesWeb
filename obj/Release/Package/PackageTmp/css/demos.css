@@ -122,6 +122,12 @@ background-color: #1d2329;
   margin: 20px 0;
 }
 .selected-row > td {
+        background: #2e6fa7 !important;
+        border-color: #2e6fa7;
+        color:white;
+    }
+
+.highlighted-row > td {
         background: #c4e2ff !important;
         border-color: #c4e2ff;
     }
@@ -154,4 +160,3 @@ iframe[name='demo'] {
     height: 100%;
     border: none;
 }
-
