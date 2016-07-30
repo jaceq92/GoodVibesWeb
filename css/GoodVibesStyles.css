@@ -12,41 +12,41 @@ body {
     height: 100%;
     padding: 10px;
     color: #262626;
+    background-color: #60686f !important;
     font-family: 'Helvetica Neue Light', 'Open Sans', Helvetica;
     font-size: 14px;
     font-weight: 300;
+    padding-bottom: 70px !important;
 }
 table {
     height:50%; 
     width:65%;
 }
 
-h1 {
-    margin: 0 0 8px 0;
-    font-size: 24px;
-    font-family: 'Helvetica Neue Light', 'Open Sans', Helvetica;
-    font-weight: 300;
-}
-
-h2 {
-    margin: 16px 0 8px 0;
-    font-size: 18px;
-    font-family: 'Helvetica Neue Light', 'Open Sans', Helvetica;
-    font-weight: 300;
-}
-
-ul {
-    list-style: none;
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 a {
-    color: #2ba6cb;
+    color: white !important;
     text-decoration: none;
+}
+
+.navbar-default {
+    background-image: -webkit-linear-gradient(top,#101010 0,#101010 100%) !important;
+    background-image: -o-linear-gradient(top,#101010 0,#101010 100%) !important;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#101010),to(#101010)) !important;
+    background-image: linear-gradient(to bottom,#101010 0,#101010 100%) !important;
 }
 
 a:hover {
     text-decoration: underline;
-    color: #258faf;
+    color: black;
 }
 
 input, button, select {
@@ -57,17 +57,18 @@ input, button, select {
 }
 
 #progressBar {
-width: 960px;
-height: 30px;
-background-color: #2e6fa7;
-margin-top: 1px;
+width: 500px;
+height: 15px;
+margin-top: 17px;
+background-color: #f5f5f5;
 }
 
 #progressBar div {
-
 height: 100%;
-background-color: #1d2329;
+background-color: #2e6fa7;
 }
+
+
 /* Wrapper for page content to push down footer */
 #wrap {
   min-height: 100%;
@@ -83,27 +84,7 @@ background-color: #1d2329;
   height: 60px;
   background-color: #f5f5f5;
 }
-.navbar-fixed-left {
-  width: 140px;
-  position: fixed;
-  border-radius: 0;
-  height: 100%;
-}
 
-.navbar-fixed-left .navbar-nav > li {
-  float: none;  /* Cancel default li float: left */
-  width: 139px;
-}
-
-.navbar-fixed-left + .container {
-  padding-left: 160px;
-}
-
-/* On using dropdown menu (To right shift popuped) */
-.navbar-fixed-left .navbar-nav > li > .dropdown-menu {
-  margin-top: -50px;
-  margin-left: 140px;
-}
 .hide
 {
    display:none;
@@ -122,13 +103,13 @@ background-color: #1d2329;
   margin: 20px 0;
 }
 .selected-row > td {
-        background: #2e6fa7 !important;
-        border-color: #2e6fa7;
+        background: black !important;
+        border-color: black !important;
         color:white;
     }
 
 .highlighted-row > td {
-        background: #c4e2ff !important;
+        background-color: #c4e2ff !important;
         border-color: #c4e2ff;
     }
 
@@ -160,3 +141,4 @@ iframe[name='demo'] {
     height: 100%;
     border: none;
 }
+

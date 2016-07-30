@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width" />
 
     <title>GoodVibes</title>
-    <link rel="stylesheet" type="text/css" href="../css/demos.css" />
+    <link rel="stylesheet" type="text/css" href="../css/GoodVibesStyles.css" />
     <link rel="stylesheet" type="text/css" href="~/css/w3animation.css" />
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap-theme.min.css" />
@@ -18,42 +18,23 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
-
-    <script src="../scripts/db.js"></script>
     <script src="../scripts/jsgrid.core.js"></script>
     <script src="../scripts/jsgrid.load-indicator.js"></script>
     <script src="../scripts/jsgrid.load-strategies.js"></script>
     <script src="../scripts/jsgrid.sort-strategies.js"></script>
     <script src="../scripts/jsgrid.field.js"></script>
     <script src="../scripts/jsgrid.field.text.js"></script>
-    <script src="../scripts/jsgrid.field.number.js"></script>
-    <script src="../scripts/jsgrid.field.select.js"></script>
-    <script src="../scripts/jsgrid.field.checkbox.js"></script>
     <script src="../scripts/jsgrid.field.control.js"></script>
+
 </head>
 
 <body class="w3-container w3-center w3-animate-opacity">
-
-    <div style="height: 86%; width:15%; float:left; margin-top: 1%;">
-        <div id="playlistmenu" class="navbar navbar-default navbar-fixed-left" style="float:right;">
-            <ul class="nav navbar-nav">
-                <li><a class="navbar-brand">Playlists</a></li>
-                <li><a style="float:left;" onclick="onclick123()" role="button">Starred</a></li>
-                <li><a style="float:left;" role="button">Metal</a></li>
-                <li><a style="float:left;" role="button">Hiphop</a></li>
-                <li><a style="float:left;" role="button">Bilelista</a></li>
-                <li><a style="float:left;" role="button">Punttimusat</a></li>
-            </ul>
-        </div>
-    </div>
-
     <div style="width:85%; margin-left:16.5%; margin-top:1%; height:75%;">
         <div class="navbar navbar-default" style="height:50px; width:75%;">
             <ul class="nav navbar-nav">
                 <li><a data-toggle="modal" role="button" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></a></li>
             </ul>
         </div>
-
         <div>
             <div id="jsgridcontainer" style="float:left; width:75%;">
                 <div id="jsGrid"></div>
@@ -62,41 +43,32 @@
                 <div style="width:100%; height:100%;" id="player"></div>
             </div>
         </div>
-
     </div>
 
-
-
     <div class="navbar navbar-default navbar-fixed-bottom">
-        <div style="width:100%">
-            <div class="navbar-header" id="nowplaying">
-                <a class="navbar-brand"><span></span></a>
-            </div>
-            <div id="playmenu">
-                <ul class="nav navbar-nav">
+        <div>
+                <ul class="list-inline unselectable">
+                    <li><a><span id="nowplaying"></span></a></li>
                     <li><a role="button" onclick="playprevioussong()"><span class="glyphicon glyphicon-step-backward"></span></a></li>
                     <li><a role="button" onclick="toggleplay()"><span id="playtoggle" class="glyphicon glyphicon-play"></span></a></li>
                     <li><a role="button" onclick="playnextsong()"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+                    <li><a><span class="glyphiconstyle" id="currenttime">0:00</span></a></li>
+                    <li>
+                            <div class="progressBar" id="progressBar">
+                                <div></div>
+                            </div>
+                    </li>
+                    <li><a><span class="glyphiconstyle" id="totaltime"></span></a></li>
+                    <li><a role="button" onclick="playermute()"><span class="glyphicon glyphicon-volume-off"></span></a></li>
+                    <li><a role="button" onclick="volumedown()"><span class="glyphicon glyphicon-volume-down"></span></a></li>
+                    <li><a role="button" onclick="volumeup()"><span class="glyphicon glyphicon-volume-up"></span></a></li>
+                    <li><a><span class="glyphiconstyle" id="volume">100</span></a></li>
+
+                    <li><a id="fullscreenbutton" role="button" onclick="gofullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></a></li>
+                    <li><a role="button" onclick="hideplayer()"><span class="glyphicon glyphicon-facetime-video"></span></a></li>
+                    <li><a data-toggle="modal" data-target="#helpModal" role="button"><b>?</b></a></li>
                 </ul>
-
-                <div class="nav navbar-text progress" style="width: 960px;">
-                    <div class="progressBar" id="progressBar">
-                        <div></div>
-                    </div>
-                </div>
             </div>
-
-            <ul style="margin-right:1%;" class="nav navbar-nav navbar-right">
-                <li><a role="button" onclick="playermute()"><span class="glyphicon glyphicon-volume-off"></span></a></li>
-                <li><a role="button" onclick="volumedown()"><span class="glyphicon glyphicon-volume-down"></span></a></li>
-                <li><a role="button" onclick="volumeup()"><span class="glyphicon glyphicon-volume-up"></span></a></li>
-                <li><a><span id="volume"></span></a></li>
-
-                <li><a id="fullscreenbutton" role="button" onclick="gofullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></a></li>
-                <li><a role="button" onclick="hideplayer()"><span class="glyphicon glyphicon-facetime-video"></span></a></li>
-                <li><a data-toggle="modal" data-target="#helpModal" role="button"><b>?</b></a></li>
-            </ul>
-        </div>
     </div>
 
     <div class="modal fade" id="myModal" role="dialog">
@@ -208,11 +180,9 @@
             player.loadVideoById(row[0].nextSibling.firstChild.innerText, 0, 'large');
         }
 
-        function toggleplay()
-        {
+        function toggleplay() {
             var state = player.getPlayerState();
-            if (state == '1')
-            {
+            if (state == '1') {
                 player.pauseVideo();
             }
             else
@@ -257,7 +227,6 @@
         $(function () {
             $('#playercontainer').hide();
             $('#fullscreenbutton').hide();
-            $('#playlistmenu').hide();
         });
 
         $(function () {
@@ -270,13 +239,17 @@
                 autoload: true,
                 rowClick: function (args) {
                     var $row = this.rowByItem(args.item);
-                    $("#jsGrid tr").removeClass("highlight-row")
-                    $row.addClass("highlight-row");
+                    if (!$row.hasClass("selected-row"))
+                    {
+                        $("#jsGrid tr").removeClass("highlighted-row")
+                        $row.addClass("highlighted-row");
+                    }
                 },
                 rowDoubleClick: function (args) {
                     var $row = this.rowByItem(args.item);
                     var val = $row["song_url"];
                     $("#jsGrid tr").removeClass("selected-row")
+                    $("#jsGrid tr").removeClass("highlighted-row")
                     $row.addClass("selected-row");
                     player.loadVideoById(args.item.song_url, 0, 'large');
                 },
@@ -313,11 +286,11 @@
                 },
 
                 fields: [
-                    { title: "song_url", css: "hide", name: "song_url", type: "text", align: "left", width: 50 },
-                    { title: "Artist", name: "song_artist", align: "left", type: "text", width: 200 },
-                    { title: "Song name", name: "song_name", align: "left", type: "text", width: 200 },
-                    { title: "Date Added", name: "date_created", align: "left", type: "date", width: 150 },
-                    { type: "control", width: 20, modeSwitchButton: false, editButton: false }
+                    { title: "song_url", css: "hide", name: "song_url", type: "text"},
+                    { title: "Artist", name: "song_artist", align: "left", type: "text", width: "35%" },
+                    { title: "Song name", name: "song_name", align: "left", type: "text", width: "35%" },
+                    { title: "Date Added", name: "date_created", align: "left", type: "date", width: "25%" },
+                    { type: "control", width: "5%", modeSwitchButton: false, editButton: false }
                 ]
             });
         });
@@ -326,6 +299,8 @@
             var progressBarWidth = percent * $element.width() / 100;
             $element.find('div').animate({ width: progressBarWidth });
         }
+
+
 
         // 2. This code loads the IFrame Player API code asynchronously.
         var tag = document.createElement('script');
@@ -366,29 +341,36 @@
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
                 $('#playtoggle').removeClass('glyphicon glyphicon-stop').addClass('glyphicon glyphicon-play');
-
                 var row = $(".selected-row:first");
                 $("#jsGrid tr").removeClass("selected-row")
                 row[0].nextSibling.className += ' selected-row';
 
                 player.loadVideoById(row[0].nextSibling.firstChild.innerText, 0, 'large');
             }
-            if (event.data == YT.PlayerState.PAUSED)
-            {
+            if (event.data == YT.PlayerState.PAUSED) {
                 $('#playtoggle').removeClass('glyphicon glyphicon-stop').addClass('glyphicon glyphicon-play');
             }
             if (event.data == YT.PlayerState.PLAYING) {
                 $('#volume').text(player.getVolume());
+
+                var playerTotalTime = player.getDuration();
+                var minutes = parseInt(playerTotalTime / 60) % 60;
+                var seconds = Math.round(playerTotalTime % 60);
+                $('#totaltime').text(minutes + ":" + ('0' + seconds).slice(-2));
+
                 var row = $(".selected-row:first");
                 $("#playtoggle").removeClass('glyphicon glyphicon-play').addClass('glyphicon glyphicon-stop');
 
-                $('#nowplaying span').text(row[0].childNodes[1].innerText + " - " + row[0].childNodes[2].innerText);
+                $('#nowplaying').text(row[0].childNodes[1].innerText + " - " + row[0].childNodes[2].innerText);
                 $('#progressBar').show();
 
                 var playerTotalTime = player.getDuration();
                 mytimer = setInterval(function () {
                     var playerCurrentTime = player.getCurrentTime();
+                    var minutes = parseInt(playerCurrentTime / 60) % 60;
+                    var seconds = Math.round(playerCurrentTime % 60);
 
+                    $('#currenttime').text(minutes + ":" + ('0' + seconds).slice(-2));
                     var playerTimeDifference = (playerCurrentTime / playerTotalTime) * 100;
 
                     progress(playerTimeDifference, $('#progressBar'));
@@ -401,7 +383,6 @@
         function stopVideo() {
             player.stopVideo();
         }
-
     </script>
 </body>
 </html>
