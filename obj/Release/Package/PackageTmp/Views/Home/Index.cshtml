@@ -2,13 +2,13 @@
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width" />
 
     <title>GoodVibes</title>
-    <link rel="stylesheet" type="text/css" href="../css/demos.css" />
-    <link rel="stylesheet" type="text/css" href="~/css/w3animation.css" />
+    <link rel="stylesheet" type="text/css" href="../css/GoodVibesStyles.css" />
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/jquery-ui.css"/>
 
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600,400' rel='stylesheet' type='text/css'>
@@ -18,85 +18,62 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
-
-    <script src="../scripts/db.js"></script>
+    <script src="../scripts/jquery-ui.js"></script>
     <script src="../scripts/jsgrid.core.js"></script>
     <script src="../scripts/jsgrid.load-indicator.js"></script>
     <script src="../scripts/jsgrid.load-strategies.js"></script>
     <script src="../scripts/jsgrid.sort-strategies.js"></script>
     <script src="../scripts/jsgrid.field.js"></script>
     <script src="../scripts/jsgrid.field.text.js"></script>
-    <script src="../scripts/jsgrid.field.number.js"></script>
-    <script src="../scripts/jsgrid.field.select.js"></script>
-    <script src="../scripts/jsgrid.field.checkbox.js"></script>
     <script src="../scripts/jsgrid.field.control.js"></script>
+    <script src="../scripts/GoodVibesScript.js"></script>
+    <script src="../scripts/js.cookie.js"></script>
+
 </head>
 
-<body class="w3-container w3-center w3-animate-opacity">
-
-    <div style="height: 86%; width:15%; float:left; margin-top: 1%;">
-        <div id="playlistmenu" class="navbar navbar-default navbar-fixed-left" style="float:right;">
-            <ul class="nav navbar-nav">
-                <li><a class="navbar-brand">Playlists</a></li>
-                <li><a style="float:left;" onclick="onclick123()" role="button">Starred</a></li>
-                <li><a style="float:left;" role="button">Metal</a></li>
-                <li><a style="float:left;" role="button">Hiphop</a></li>
-                <li><a style="float:left;" role="button">Bilelista</a></li>
-                <li><a style="float:left;" role="button">Punttimusat</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div style="width:85%; margin-left:16.5%; margin-top:1%; height:75%;">
-        <div class="navbar navbar-default" style="height:50px; width:75%;">
-            <ul class="nav navbar-nav">
-                <li><a data-toggle="modal" role="button" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></a></li>
-            </ul>
-        </div>
-
-        <div>
-            <div id="jsgridcontainer" style="float:left; width:75%;">
+<body>
+    <div style="overflow:hidden; width:85%; margin-top:1%; height:100%;">
+        <div style="margin-left:15%;">
+            <div class="navbar navbar-default" style="height:5%; width:100%;">
+                <ul class="nav navbar-nav">
+                    <li style="width:125px;"><a data-toggle="modal" role="button" data-target="#playlistModal"><span class="glyphicon glyphicon-plus"></span> Add playlist</a></li>
+                    <li style="width:125px;"><a data-toggle="modal" role="button" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span> Add song</a></li>
+                    <li style="width:100px; float:right;"><a role="button" onclick="logout()">Log Out</a></li>
+                </ul>
+            </div>
+            <div id="jsgridcontainer2" style="overflow:visible; float:left; width:25%; height:75%; padding-right:5px;">
+                <div id="jsGrid2"></div>
+            </div>
+            <div id="jsgridcontainer" style="overflow:visible; float:left; width:75%;">
                 <div id="jsGrid"></div>
             </div>
-            <div id="playercontainer" style="float:right; margin-right: 25%; height:750px; width:37.5%;">
+            <div id="playercontainer" style="overflow:visible; float:right; height:750px; width:37.5%;">
                 <div style="width:100%; height:100%;" id="player"></div>
             </div>
         </div>
-
     </div>
 
-
-
     <div class="navbar navbar-default navbar-fixed-bottom">
-        <div style="width:100%">
-            <div class="navbar-header" id="nowplaying">
-                <a class="navbar-brand"><span></span></a>
-            </div>
-            <div id="playmenu">
-                <ul class="nav navbar-nav">
+        <div>
+                <ul class="list-inline nav navbar-nav">
+                    <li style="width:20%;"><a><span id="nowplaying"></span></a></li>
                     <li><a role="button" onclick="playprevioussong()"><span class="glyphicon glyphicon-step-backward"></span></a></li>
                     <li><a role="button" onclick="toggleplay()"><span id="playtoggle" class="glyphicon glyphicon-play"></span></a></li>
                     <li><a role="button" onclick="playnextsong()"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+                    <li><a><span class="glyphiconstyle" id="currenttime">0:00</span></a></li>
+                    <li style="width:30%;">
+                        <a style="margin-top:4px;"><div id="progress_slider"></div></a>
+                    </li>
+                    <li><a><span class="glyphiconstyle" id="totaltime"></span></a></li>
+                    <li><a role="button" onclick="togglemute()"><span id="togglemute" class="glyphicon glyphicon-volume-up"></span></a></li>
+                    <li style="width:10%;">
+                        <a style="margin-top:4px;"><div id="volume_slider"></div></a>
+                    </li>
+                    <li><a id="fullscreenbutton" role="button" onclick="gofullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></a></li>
+                    <li><a role="button" onclick="hideplayer()"><span class="glyphicon glyphicon-facetime-video"></span></a></li>
+                    <li><a data-toggle="modal" data-target="#helpModal" role="button"><b>?</b></a></li>
                 </ul>
-
-                <div class="nav navbar-text progress" style="width: 960px;">
-                    <div class="progressBar" id="progressBar">
-                        <div></div>
-                    </div>
-                </div>
             </div>
-
-            <ul style="margin-right:1%;" class="nav navbar-nav navbar-right">
-                <li><a role="button" onclick="playermute()"><span class="glyphicon glyphicon-volume-off"></span></a></li>
-                <li><a role="button" onclick="volumedown()"><span class="glyphicon glyphicon-volume-down"></span></a></li>
-                <li><a role="button" onclick="volumeup()"><span class="glyphicon glyphicon-volume-up"></span></a></li>
-                <li><a><span id="volume"></span></a></li>
-
-                <li><a id="fullscreenbutton" role="button" onclick="gofullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></a></li>
-                <li><a role="button" onclick="hideplayer()"><span class="glyphicon glyphicon-facetime-video"></span></a></li>
-                <li><a data-toggle="modal" data-target="#helpModal" role="button"><b>?</b></a></li>
-            </ul>
-        </div>
     </div>
 
     <div class="modal fade" id="myModal" role="dialog">
@@ -138,270 +115,23 @@
         </div>
     </div>
 
-
-    <script>
-
-        function gofullscreen() {
-            var $ = document.querySelector.bind(document);
-            var playerElement = $('#player');
-            var requestFullScreen = playerElement.requestFullScreen || playerElement.mozRequestFullScreen || playerElement.webkitRequestFullScreen;
-            if (requestFullScreen) {
-                requestFullScreen.bind(playerElement)();
-            }
-        }
-
-        function volumeup() {
-            var currentvolume = player.getVolume();
-            player.setVolume(currentvolume + 5);
-            $('#volume').text(player.getVolume());
-        }
-
-        function volumedown() {
-            var currentvolume = player.getVolume();
-            player.setVolume(currentvolume - 5);
-            $('#volume').text(player.getVolume());
-        }
-
-        function playermute() {
-            if (player.isMuted()) {
-                player.unMute();
-            }
-            else
-                player.mute();
-        }
-
-        $(function () {
-            $('#addsongform').on('submit', function (e) {
-                var row = $(".selected-row:first");
-                var rowindex = row[0].rowIndex + 1;
-                e.preventDefault();
-                $.ajax({
-                    url: "../api/insertsong/",
-                    type: "POST",
-                    data: $("#addsongform").serialize(),
-                    dataType: "text",
-                    success: function (data) {
-                        $("#jsGrid").jsGrid("loadData").done(function () {
-                            $('#myModal').modal('hide');
-                            var rows = $(".jsgrid-row, .jsgrid-alt-row")
-                            rows[rowindex].className += ' selected-row';
-                        });
-
-                    },
-                    error: function (data) {
-                    }
-                });
-            });
-        });
-
-        function playprevioussong() {
-            var row = $(".selected-row:first");
-            $("#jsGrid tr").removeClass("selected-row")
-            row[0].previousSibling.className += ' selected-row';
-            player.loadVideoById(row[0].previousSibling.firstChild.innerText, 0, 'large');
-        }
-
-        function playnextsong() {
-            var row = $(".selected-row:first");
-            $("#jsGrid tr").removeClass("selected-row")
-            row[0].nextSibling.className += ' selected-row';
-            player.loadVideoById(row[0].nextSibling.firstChild.innerText, 0, 'large');
-        }
-
-        function toggleplay()
-        {
-            var state = player.getPlayerState();
-            if (state == '1')
-            {
-                player.pauseVideo();
-            }
-            else
-                player.playVideo();
-        }
-
-        function hideplayer() {
-            var row = $(".selected-row:first");
-            var rowindex = row[0].rowIndex;
-
-
-            if ($('#playercontainer').is(':hidden')) {
-                $("#jsgridcontainer").animate({
-                    opacity: 1.00,
-                    width: "37.5%"
-                }, 500, function () {
-                    $("#jsGrid").jsGrid("refresh");
-                    var rows = $(".jsgrid-row, .jsgrid-alt-row")
-                    rows[rowindex].className += ' selected-row';
-                    $('#fullscreenbutton').fadeIn(500);
-
-                    $("#playercontainer").fadeIn(500, function () {
-
-                    });
-                });
-            }
-            else {
-                $("#playercontainer").fadeOut(500, function () {
-                    $("#jsgridcontainer").animate({
-                        opacity: 1.00,
-                        width: "75%"
-                    }, 500, function () {
-                        $('#fullscreenbutton').fadeOut(500);
-                        $("#jsGrid").jsGrid("refresh");
-                        var rows = $(".jsgrid-row, .jsgrid-alt-row")
-                        rows[rowindex].className += ' selected-row';
-                    });
-                });
-            }
-        }
-
-        $(function () {
-            $('#playercontainer').hide();
-            $('#fullscreenbutton').hide();
-            $('#playlistmenu').hide();
-        });
-
-        $(function () {
-            $("#jsGrid").jsGrid({
-                height: "750px",
-                width: "100%",
-                sorting: true,
-                paging: false,
-
-                autoload: true,
-                rowClick: function (args) {
-                    var $row = this.rowByItem(args.item);
-                    $("#jsGrid tr").removeClass("highlight-row")
-                    $row.addClass("highlight-row");
-                },
-                rowDoubleClick: function (args) {
-                    var $row = this.rowByItem(args.item);
-                    var val = $row["song_url"];
-                    $("#jsGrid tr").removeClass("selected-row")
-                    $row.addClass("selected-row");
-                    player.loadVideoById(args.item.song_url, 0, 'large');
-                },
-
-                controller: {
-                    loadData: function () {
-                        return $.ajax({
-                            type: "GET",
-                            url: "../api/getplaylist/JSK",
-                            dataType: "json",
-                        })
-                    },
-                    deleteItem: function (item) {
-                        var row = $(".selected-row:first");
-                        var rowindex = row[0].rowIndex - 1;
-
-
-                        return $.ajax({
-                            url: "../api/deletesong/JSK/" + item.song_url,
-                            type: "DELETE",
-                            dataType: "text",
-                            success: function (data) {
-                                $("#jsGrid").jsGrid("loadData").done(function () {
-                                    var rows = $(".jsgrid-row, .jsgrid-alt-row")
-                                    rows[rowindex].className += ' selected-row';
-                                });
-
-                            },
-                            error: function (data) {
-                                alert("Song delete failed");
-                            }
-                        });
-                    }
-                },
-
-                fields: [
-                    { title: "song_url", css: "hide", name: "song_url", type: "text", align: "left", width: 50 },
-                    { title: "Artist", name: "song_artist", align: "left", type: "text", width: 200 },
-                    { title: "Song name", name: "song_name", align: "left", type: "text", width: 200 },
-                    { title: "Date Added", name: "date_created", align: "left", type: "date", width: 150 },
-                    { type: "control", width: 20, modeSwitchButton: false, editButton: false }
-                ]
-            });
-        });
-
-        function progress(percent, $element) {
-            var progressBarWidth = percent * $element.width() / 100;
-            $element.find('div').animate({ width: progressBarWidth });
-        }
-
-        // 2. This code loads the IFrame Player API code asynchronously.
-        var tag = document.createElement('script');
-
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // 3. This function creates an <iframe> (and YouTube player)
-        //    after the API code downloads.
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '70%',
-                width: '75%',
-
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                },
-                playerVars: {
-                    'modestbranding': 1,
-                    'autoplay': 0,
-                    'controls': 0,
-                    'rel': 0,
-                    'showinfo': 0
-                }
-            });
-        }
-
-        // 4. The API will call this function when the video player is ready.
-        function onPlayerReady(event) {
-            var row = $(".jsgrid-row:first");
-            row[0].className += ' selected-row';
-            player.loadVideoById(row[0].firstChild.innerText, 0, 'large');
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.ENDED) {
-                $('#playtoggle').removeClass('glyphicon glyphicon-stop').addClass('glyphicon glyphicon-play');
-
-                var row = $(".selected-row:first");
-                $("#jsGrid tr").removeClass("selected-row")
-                row[0].nextSibling.className += ' selected-row';
-
-                player.loadVideoById(row[0].nextSibling.firstChild.innerText, 0, 'large');
-            }
-            if (event.data == YT.PlayerState.PAUSED)
-            {
-                $('#playtoggle').removeClass('glyphicon glyphicon-stop').addClass('glyphicon glyphicon-play');
-            }
-            if (event.data == YT.PlayerState.PLAYING) {
-                $('#volume').text(player.getVolume());
-                var row = $(".selected-row:first");
-                $("#playtoggle").removeClass('glyphicon glyphicon-play').addClass('glyphicon glyphicon-stop');
-
-                $('#nowplaying span').text(row[0].childNodes[1].innerText + " - " + row[0].childNodes[2].innerText);
-                $('#progressBar').show();
-
-                var playerTotalTime = player.getDuration();
-                mytimer = setInterval(function () {
-                    var playerCurrentTime = player.getCurrentTime();
-
-                    var playerTimeDifference = (playerCurrentTime / playerTotalTime) * 100;
-
-                    progress(playerTimeDifference, $('#progressBar'));
-                }, 1000);
-
-            } else {
-                clearTimeout(mytimer);
-            }
-        }
-        function stopVideo() {
-            player.stopVideo();
-        }
-
-    </script>
+    <div class="modal fade" id="playlistModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add a playlist</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="addplaylistform" name="addplaylistform" id="addplaylistform" method="post" role="form">
+                        <div class="form-group">
+                            <input type="text" name="playlist_name" class="form-control" id="playlist_name" placeholder="Playlist name">
+                        </div>
+                        <button type="submit" id="addsongform" class="btn btn-default">Add playlist</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

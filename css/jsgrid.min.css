@@ -12,6 +12,7 @@
 
     .jsgrid, .jsgrid *, .jsgrid :after, .jsgrid :before {
         box-sizing: border-box;
+        height: 5%;
     }
 
         .jsgrid input, .jsgrid select, .jsgrid textarea {
