@@ -16,13 +16,15 @@ create table users(
 userid int identity(1,1),
 username varchar(100) not null,
 password varchar(255) not null,
-email varchar(255) not null
+email varchar(255) not null,
+CONSTRAINT u_username UNIQUE(username),
+CONSTRAINT u_email UNIQUE(email)
 )
 
 create table playlists(
 playlist_id int identity(1,1),
 playlist_name varchar(100) not null,
-userid int not null
+username varchar(100) not null
 )
 
 insert into playlists (playlist_name, username) values ('Jarkon lista', 'JSK')

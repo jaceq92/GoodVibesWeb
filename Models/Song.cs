@@ -8,6 +8,7 @@ namespace GoodVibesWeb.Models
     public class Song
     {
         public string song_artist { get; set; }
+        public string title { get; set; }
         public string song_name { get; set; }
         public string song_url { get; set; }
         public string date_created { get; set; }

@@ -16,7 +16,9 @@ body {
     font-family: 'Helvetica Neue Light', 'Open Sans', Helvetica;
     font-size: 14px;
     font-weight: 300;
-    padding-bottom: 70px !important;
+    padding-bottom: 5% !important;
+    min-width:1000px;
+   _width: expression( document.body.clientWidth > 1000 ? "1000px" : "auto" ); /* sets max-width for IE */
 }
 table {
     height:50%; 
@@ -44,6 +46,7 @@ li {
 }
 
 .navbar-default {
+    height:20px !important;
     background-image: -webkit-linear-gradient(top,#101010 0,#101010 100%) !important;
     background-image: -o-linear-gradient(top,#101010 0,#101010 100%) !important;
     background-image: -webkit-gradient(linear,left top,left bottom,from(#101010),to(#101010)) !important;

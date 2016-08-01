@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -10,16 +9,15 @@ using GoodVibesWeb.Models;
 using System.Text;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
+using Google.Apis.YouTube.v3;
+using Google.Apis.Services;
 
 namespace GoodVibesWeb.Controllers
 {
     public class SongDataController : ApiController
     {
         string sConn =
-            "Data Source=samker.database.windows.net;" +
-            "Initial Catalog=GOODVIBESDB;" +
-            "User id=samk;" +
-            "Password=Kuikka666;";
+            ServerData.sconn;
 
         [Route("api/getplaylists/{username}")]
         [HttpGet]
@@ -122,7 +120,7 @@ namespace GoodVibesWeb.Controllers
         {
             try
             {
-                string hashedpassword = sha256(u.password + "suola123666");
+                string hashedpassword = sha256(u.password + ServerData.salt);
                 string passwordfromdb;
 
                 using (SqlConnection sc = new SqlConnection(sConn))
@@ -286,6 +284,46 @@ namespace GoodVibesWeb.Controllers
                 return response;
             }
         }
+
+        [Route("api/searchyoutube/{keyword}")]
+        [HttpGet]
+        public async System.Threading.Tasks.Task<HttpResponseMessage> SearchYoutube(string keyword)
+        {
+            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+            {
+                ApiKey = ServerData.apikey,
+                ApplicationName = this.GetType().ToString()
+            });
+
+            var searchListRequest = youtubeService.Search.List("snippet");
+            searchListRequest.Q = keyword;
+            searchListRequest.MaxResults = 50;
+
+            // Call the search.list method to retrieve results matching the specified query term.
+            var searchListResponse = await searchListRequest.ExecuteAsync();
+
+            List<Song> videos = new List<Song>();
+
+            // Add each result to the appropriate list, and then display the lists of
+            // matching videos, channels, and playlists.
+            foreach (var searchResult in searchListResponse.Items)
+            {
+                if (searchResult.Id.Kind == "youtube#video")
+                {
+                    Song s = new Song();
+                    s.title = searchResult.Snippet.Title;
+                    s.song_url = searchResult.Id.VideoId;
+                    videos.Add(s);
+                }
+            }
+
+            string result = JsonConvert.SerializeObject(videos);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(result, Encoding.UTF8, "application/json");
+
+            return response;
+        }
+
         static string sha256(string password)
         {
             System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();

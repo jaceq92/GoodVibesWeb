@@ -14,6 +14,27 @@
         });
 });
 
+$('#addsongModal').on('hidden.bs.modal', function () {
+    console.log("fsdfdasf");
+})
+$('#addsongModal').on('hidden', function () {
+    console.log("fsdfdasf");
+})
+
+$(document).on('hide.bs.modal', '#addsongModal', function () {
+    $("#youtube_title").text(" ");
+});
+
+
+//$(document).ready(function () {
+//    $(window).keydown(function (event) {
+//        if (event.keyCode == 13) {
+//            event.preventDefault();
+//            return false;
+//        }
+//    });
+//});
+
 $(function () {
     $("#volume_slider").slider(
         {
@@ -57,7 +78,7 @@ $(function () {
             dataType: "text",
             success: function (data) {
                 $("#jsGrid").jsGrid("loadData").done(function () {
-                    $('#myModal').modal('hide');
+                    $('#addsongModal').modal('hide');
                 });
             },
             error: function (data) {
@@ -201,6 +222,59 @@ function hideplayer() {
         }
 }
 
+function searchyoutube() {
+        $("#jsGrid3").jsGrid({
+            height: "700px",
+            width: "100%",
+            sorting: true,
+            paging: false,
+
+            autoload: true,
+            noDataContent: "No search results!",
+
+            rowClick: function (args) {
+                var $row = this.rowByItem(args.item);
+                if (!$row.hasClass("selected-row")) {
+                    $("#jsGrid3 tr").removeClass("highlighted-row")
+                    $row.addClass("highlighted-row");
+                }
+            },
+            rowDoubleClick: function (args) {
+                var $row = this.rowByItem(args.item);
+
+                $("#searchyoutubeModal").modal("hide");
+                $("#addsongModal").modal("show");
+                var title = $row[0].lastChild.innerText;
+                var artist = title.substr(0, title.indexOf('-')).trim();
+                var songtitle = title.substr(title.indexOf('-') + 1).trim();
+                document.getElementById("song_url_field").value = $row[0].firstChild.innerText;
+                $("#youtube_title").text(": " + $row[0].lastChild.innerText);
+                document.getElementById("song_artist_field").value = artist;
+                document.getElementById("song_name_field").value = songtitle;
+
+            },
+            onDataLoaded: function (args) {
+                $("#searchyoutubeModal").modal("show");
+            },
+
+            controller: {
+                loadData: function () {
+                    var keyword = $("#keyword").val();
+                    var res = keyword.replace(" ", "%20");
+                    return $.ajax({
+                        type: "GET",
+                        url: "../api/searchyoutube/" + res,
+                        dataType: "json",
+                    })
+                },
+            },
+
+            fields: [
+                     { title: "song_url", css: "hide", name: "song_url", type: "textarea" },
+                     { title: "Title", name: "title", type: "text", width: 600},
+            ]
+        });
+}
 
 $(function () {
     $("#jsGrid2").jsGrid({

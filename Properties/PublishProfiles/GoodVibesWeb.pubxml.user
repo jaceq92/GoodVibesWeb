@@ -7,6 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_PublishTargetUrl>C:\Users\Jarkko\Documents\GoodVibes\Publish</_PublishTargetUrl>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiB6U/fv1WU+YkHtyA4o4RwAAAAACAAAAAAAQZgAAAAEAACAAAAAPxq373BqhmH+UuYXzLskxWI3FPw0RJLAGJejkh52CgAAAAAAOgAAAAAIAACAAAAA+PKr/KLW20W9ENSCxO+H1d0ICZD/m2LayaQDrZ816qYAAAACnoCrRJ9D2At5V49OCkEwygKBKVmy8rh/X221cQbxTPVdRTb1MN4Wtt35dcNv2wrzsR3INCKKxSZp8GTpyinXy7GnPCctYb4/MteQmBBulbBs58ZUhe1guSft00REpxBvLNe0Nz+xobODa+l69AeTRhr4XlPbTHuNnwozzl4wWS0AAAAA6xFPTFSOIBRgJawfG+Adr3CMHXyd67M9hNCox9DyZB7+9HpuVNILa84m1MOJbDO/Wq8JHeZEr56e03bG20tfg</EncryptedPassword>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
