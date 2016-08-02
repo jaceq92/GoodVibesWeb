@@ -26,6 +26,7 @@ playlist_id int identity(1,1),
 playlist_name varchar(100) not null,
 username varchar(100) not null
 )
+alter table playlists add deletable bit default 1
 
 insert into playlists (playlist_name, username) values ('Jarkon lista', 'JSK')
 

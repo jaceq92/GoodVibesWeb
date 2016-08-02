@@ -9,5 +9,6 @@ namespace GoodVibesWeb.Models
     {
         public string playlist_name { get; set; }
         public string playlist_id { get; set; }
+        public bool deletable { get; set; }
     }
 }

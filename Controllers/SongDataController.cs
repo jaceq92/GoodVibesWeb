@@ -29,7 +29,7 @@ namespace GoodVibesWeb.Controllers
             using (SqlConnection sc = new SqlConnection(sConn))
             {
                 sc.Open();
-                string sql = "SELECT playlist_id, playlist_name FROM dbo.playlists where username = @username";
+                string sql = "SELECT playlist_id, playlist_name,deletable FROM dbo.playlists where username = @username";
                 SqlCommand com = new SqlCommand(sql, sc);
                 com.Parameters.AddWithValue("@username", username);
 
@@ -40,7 +40,7 @@ namespace GoodVibesWeb.Controllers
                         Playlist plist = new Playlist();
                         plist.playlist_id = reader["playlist_id"].ToString();
                         plist.playlist_name = reader["playlist_name"].ToString();
-                        
+                        plist.deletable = (bool)reader["deletable"];
                         playlists.Add(plist);
                     }
                 }
@@ -61,7 +61,7 @@ namespace GoodVibesWeb.Controllers
                 using (SqlConnection sc = new SqlConnection(sConn))
                 {
                     sc.Open();
-                    string sql = "insert into playlists(playlist_name, username) values(@playlist_name, @username)";
+                    string sql = "insert into playlists(playlist_name, username, deletable) values(@playlist_name, @username, 1)";
                     SqlCommand com = new SqlCommand(sql, sc);
                     com.Parameters.AddWithValue("@playlist_name", p.playlist_name);
                     com.Parameters.AddWithValue("@username", username);
@@ -234,9 +234,9 @@ namespace GoodVibesWeb.Controllers
             {
                 using (SqlConnection sc = new SqlConnection(sConn))
                 {
-
                     sc.Open();
-                    string sql = "Delete from playlists where playlist_id = @playlist_id and username = @username";
+
+                    string sql = "Delete from playlists where playlist_id = @playlist_id and username = @username and deletable = 1";
                     SqlCommand com = new SqlCommand(sql, sc);
                     com.Parameters.AddWithValue("@playlist_id", playlist_id);
                     com.Parameters.AddWithValue("@username", username);

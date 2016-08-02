@@ -34,6 +34,7 @@
 }
 
 .jsgrid-header-scrollbar {
+    background-color: rgba(0,0,0,0.8) !important;
     width: 100%;
     scrollbar-arrow-color: #f1f1f1;
     scrollbar-base-color: #f1f1f1;
@@ -100,12 +101,13 @@
     border-right: none;
 }
 
-.jsgrid-row > .jsgrid-cell {
-    background: #fff;
+.jsgrid-alt-row > .jsgrid-cell {
+    background: #0b020e !important;
 }
 
-.jsgrid-alt-row > .jsgrid-cell {
-    background: #fcfcfc;
+
+.jsgrid-row > .jsgrid-cell {
+    background: rgba(24, 47, 76, 0.5) !important;
 }
 
 .jsgrid-header-row > .jsgrid-header-cell {

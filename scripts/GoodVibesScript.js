@@ -193,6 +193,7 @@ function hideplayer() {
                 rows2[rowindex2].className += ' selected-row';
 
                 $('#fullscreenbutton').fadeIn(500);
+                $("#playercontainer").width("38%");
                 $("#playercontainer").fadeIn(500);
             });
         });
@@ -224,7 +225,7 @@ function hideplayer() {
 
 function searchyoutube() {
         $("#jsGrid3").jsGrid({
-            height: "700px",
+            height: "100%",
             width: "100%",
             sorting: true,
             paging: false,
@@ -278,13 +279,11 @@ function searchyoutube() {
 
 $(function () {
     $("#jsGrid2").jsGrid({
-        height: "790px",
+        height: "100%",
         width: "100%",
         sorting: true,
         paging: false,
-
         autoload: true,
-        noDataContent: "Add a playlist",
 
         rowClick: function (args) {
             var $row = this.rowByItem(args.item);
@@ -345,14 +344,24 @@ $(function () {
         fields: [
                  { title: "id", css: "hide", name: "playlist_id", type: "textarea" },
                  { title: "Playlists", name: "playlist_name", align: "left", type: "textarea", width: "90%" },
-                 { type: "control", width: "10%", modeSwitchButton: false, editButton: false }
+                 {
+                     type: "control", width: "10%", modeSwitchButton: false, editButton: false,
+                     itemTemplate: function (value, item) {
+                         var $result = $([]);
+
+                         if (item.deletable) {
+                             $result = $result.add(this._createDeleteButton(item));
+                         }
+                         return $result;
+                     }
+                 }
         ]
     });
 });
 
 $(function () {
     $("#jsGrid").jsGrid({
-        height: "790px",
+        height: "100%",
         width: "100%",
         sorting: true,
         paging: false,
@@ -432,8 +441,8 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-        height: '70%',
-        width: '75%',
+        height: '100%',
+        width: '100%',
 
         events: {
             'onReady': onPlayerReady,
@@ -452,7 +461,7 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
     var row = $("#jsGrid .jsgrid-row:first");
     row[0].className += ' selected-row';
-    player.loadVideoById(row[0].firstChild.innerText, 0, 'large');
+    player.cueVideoById(row[0].firstChild.innerText, 0, 'large');
 }
 
 function onPlayerStateChange(event) {
@@ -468,13 +477,19 @@ function onPlayerStateChange(event) {
         $('#playtoggle').removeClass('glyphicon glyphicon-stop').addClass('glyphicon glyphicon-play');
     }
     if (event.data == YT.PlayerState.PLAYING) {
+
         $('#volume').text(player.getVolume());
-
         var playerTotalTime = player.getDuration();
+        var hours = Math.floor(playerTotalTime / 3600);
         var minutes = parseInt(playerTotalTime / 60) % 60;
-        var seconds = Math.round(playerTotalTime % 60);
-        $('#totaltime').text(minutes + ":" + ('0' + seconds).slice(-2));
-
+        var seconds = Math.round(playerTotalTime % 60);        
+        if (hours > 1) {
+            $('#totaltime').text(hours + ":" + ('0' + minutes).slice(-2) + ":" + ('0' + seconds).slice(-2));
+        }
+        else {
+            $('#totaltime').text(minutes + ":" + ('0' + seconds).slice(-2));
+        }
+        
         var row = $("#jsGrid .selected-row:first");
         $("#playtoggle").removeClass('glyphicon glyphicon-play').addClass('glyphicon glyphicon-stop');
 
@@ -486,15 +501,22 @@ function onPlayerStateChange(event) {
 
             rows.each(function (index) {
                 if (rows[index].firstChild.innerText == row[0].firstChild.innerText) {
-                    rows[index].className += ' selected-row';
+                    if (!$(rows[index]).hasClass('selected-row'))
+                        rows[index].className += ' selected-row';
                 }
             });
 
             var playerCurrentTime = player.getCurrentTime();
+            var hours = Math.floor(playerCurrentTime / 3600);
             var minutes = parseInt(playerCurrentTime / 60) % 60;
             var seconds = Math.round(playerCurrentTime % 60);
-
-            $('#currenttime').text(minutes + ":" + ('0' + seconds).slice(-2));
+            if (hours >= 1) {
+                $('#currenttime').text(hours + ":" + ('0' + minutes).slice(-2) + ":" + ('0' + seconds).slice(-2));
+            }
+            else
+            {
+                $('#currenttime').text(minutes + ":" + ('0' + seconds).slice(-2));
+            }
             $("#progress_slider").slider("option", "value", playerCurrentTime);
             $("#progress_slider").slider("option", "max", playerTotalTime);
         }, 500);

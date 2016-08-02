@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -7,15 +6,17 @@
 
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" type="text/css" href="~/css/GoodVibesStyles.css"/>
+    <link rel="stylesheet" type="text/css" href="~/css/GoodVibesStyles.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
     <script src="../scripts/GoodVibesLogin.js"></script>
 </head>
 <body>
+    @*Created by Jarkko Skyttälä*@
     <div style="background-color: white; padding:20px; width: 25%; margin: auto; margin-top:7.5%;">
+        <h1>GoodVibes Project</h1>
         <label><span id="result"></span></label>
-        <form id="loginform" name="loginform">
+        <form id="loginform" name="loginform" style="padding-bottom:20px;">
             <div class="form-group">
                 <label for="exampleInputEmail1">Username</label>
                 <input type="text" class="form-control" name="username" id="username" placeholder="Username">
@@ -26,14 +27,20 @@
             </div>
             <button type="submit" class="btn btn-default">Login</button>
             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#registerModal">Register now!</button>
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#forgotpasswordModal">Forgot password?</button>
         </form>
+        <a style="color:black!important;" role="button" data-toggle="modal" data-target="#forgotpasswordModal">Forgot password?</a><br />
+    </div>
+    <div style="background-color: white; padding:20px; width: 25%; margin: auto; margin-top:1%;">
+            <h3>About GoodVibes</h3>
+        <p>
+            GoodVibes is a music portal for everybody who is tired of the clunky user interface of Youtube. In GoodVibes you can use Youtube content as if it was an app like Spotify.
+            To get started you only have to <b>register</b> and <b>log in</b>!
+        </p>
     </div>
 
-    <div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="navbar navbar-default navbar-fixed-bottom" style="margin-bottom:0px!important;">
         <div>
-            <ul class="list-inline nav navbar-nav">
-                <li style="width:100%;"><a><span>GoodVibes 2016. Created by Jarkko Skyttälä</span></a></li>
+            <ul style="height:100%;" class="list-inline nav navbar-nav">
             </ul>
         </div>
     </div>
