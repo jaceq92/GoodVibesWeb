@@ -14,13 +14,6 @@
         });
 });
 
-$('#addsongModal').on('hidden.bs.modal', function () {
-    console.log("fsdfdasf");
-})
-$('#addsongModal').on('hidden', function () {
-    console.log("fsdfdasf");
-})
-
 $(document).on('hide.bs.modal', '#addsongModal', function () {
     $("#youtube_title").text(" ");
 });
@@ -87,6 +80,7 @@ $(function () {
     });
 });
 
+
 $(function () {
     $('#addplaylistform').on('submit', function (e) {
         var row = $("#jsGrid2.selected-row:first");
@@ -121,14 +115,15 @@ function logout()
 }
 
 
-function gofullscreen() {
-    var $ = document.querySelector.bind(document);
-    var playerElement = $('#player');
-    var requestFullScreen = playerElement.requestFullScreen || playerElement.mozRequestFullScreen || playerElement.webkitRequestFullScreen;
-    if (requestFullScreen) {
-        requestFullScreen.bind(playerElement)();
-    }
-}
+//function gofullscreen() {
+//    //var $ = document.querySelector.bind(document);
+//    //var playerElement = $('#player');
+//    //var requestFullScreen = playerElement.requestFullScreen || playerElement.mozRequestFullScreen || playerElement.webkitRequestFullScreen;
+//    //if (requestFullScreen) {
+//    //    requestFullScreen.bind(playerElement)();
+//    //}
+//}
+
 
 function togglemute() {
     if (player.isMuted()) {
@@ -175,32 +170,35 @@ function hideplayer() {
 
 
     if ($('#playercontainer').is(':hidden')) {
-        $("#jsgridcontainer2").animate({
-            opacity: 1.00,
-            width: "20.0%"
-        }, 500, function () {
-            $("#jsgridcontainer").animate({
+        $("#addsong_button").fadeOut(250, function () {
+            $("#jsgridcontainer2").animate({
                 opacity: 1.00,
-                width: "42%"
+                width: "20.0%"
             }, 500, function () {
-                $("#jsGrid").jsGrid("refresh");
-                $("#jsGrid2").jsGrid("refresh");
+                $("#jsgridcontainer").animate({
+                    opacity: 1.00,
+                    width: "42%"
+                }, 500, function () {
+                    $("#jsGrid").jsGrid("refresh");
+                    $("#jsGrid2").jsGrid("refresh");
 
-                var rows = $("#jsGrid").find('.jsgrid-row, .jsgrid-alt-row');
-                var rows2 = $("#jsGrid2").find('.jsgrid-row, .jsgrid-alt-row');
+                    var rows = $("#jsGrid").find('.jsgrid-row, .jsgrid-alt-row');
+                    var rows2 = $("#jsGrid2").find('.jsgrid-row, .jsgrid-alt-row');
 
-                rows[rowindex].className += ' selected-row';
-                rows2[rowindex2].className += ' selected-row';
+                    rows[rowindex].className += ' selected-row';
+                    rows2[rowindex2].className += ' selected-row';
 
-                $('#fullscreenbutton').fadeIn(500);
-                $("#playercontainer").width("38%");
-                $("#playercontainer").fadeIn(500);
+                    $("#playercontainer").width("38%");
+                    $("#playercontainer").fadeIn(500);
+                    $("#addsong_button").fadeIn(500);
+                });
             });
         });
-    }
+    } 
     else {
         $("#playercontainer").fadeOut(500, function () {
-            $("#jsgridcontainer2").animate({
+            $("#addsong_button").fadeOut(250, function () {
+                $("#jsgridcontainer2").animate({
                 opacity: 1.00,
                 width: "25.0%"
             }, 500, function () {
@@ -208,15 +206,15 @@ function hideplayer() {
                     opacity: 1.00,
                     width: "75%"
                 }, 500, function () {
-                    $('#fullscreenbutton').fadeOut(500);
                     $("#jsGrid").jsGrid("refresh");
                     $("#jsGrid2").jsGrid("refresh");
+                    $("#addsong_button").fadeIn(500);
                     var rows = $("#jsGrid").find('.jsgrid-row, .jsgrid-alt-row');
                     var rows2 = $("#jsGrid2").find('.jsgrid-row, .jsgrid-alt-row');
 
                     rows[rowindex].className += ' selected-row';
                     rows2[rowindex2].className += ' selected-row';
-
+                });
                 });
             });
         });
@@ -425,7 +423,17 @@ $(function () {
             { title: "Artist", name: "song_artist", align: "left", type: "textarea", width: "35%" },
             { title: "Song name", name: "song_name", align: "left", type: "textarea", width: "35%" },
             { title: "Date Added", name: "date_created", align: "left", type: "textarea", width: "25%" },
-            { type: "control", width: "5%", modeSwitchButton: false, editButton: false }
+            {
+                type: "control", width: "5%", modeSwitchButton: false, editButton: false,
+                itemTemplate: function (value, item) {
+                    var $result = $([]);
+
+                    if (item.username == Cookies.get("username")) {
+                        $result = $result.add(this._createDeleteButton(item));
+                    }
+                    return $result;
+                }
+            }
         ]
     });
 });

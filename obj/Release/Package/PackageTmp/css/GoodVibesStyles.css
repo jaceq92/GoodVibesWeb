@@ -83,6 +83,18 @@ li {
     width:3.5%;
 }
 
+.gv_button
+{
+    background-image: -webkit-linear-gradient(top,#101010 0,#101010 100%) !important;
+    background-image: -o-linear-gradient(top,#101010 0,#101010 100%) !important;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#101010),to(#101010)) !important;
+    background-image: linear-gradient(to bottom,#101010 0,#101010 100%) !important;    
+    border: 1px solid white !important;
+    width:100% !important;
+    height:100%;
+    overflow:visible !important;
+}
+
 .navbar-default {
     height:20px !important;
     background-image: -webkit-linear-gradient(top,#101010 0,#101010 100%) !important;

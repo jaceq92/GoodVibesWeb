@@ -36,11 +36,9 @@
         <div>
             <div class="navbar navbar-default" style="height:5%; width:100%;">
                 <ul class="nav navbar-nav">
-                    <li style="width:125px;"><a data-toggle="modal" role="button" data-target="#playlistModal"><span class="glyphicon glyphicon-plus"></span> Playlist</a></li>
-                    <li style="width:125px;"><a data-toggle="modal" role="button" data-target="#addsongModal"><span class="glyphicon glyphicon-plus"></span> Song</a></li>
-                    <li style="width:300px;">
+                    <li style="width:500px;">
                         <form class="navbar-form" name="searchyoutubeform" id="searchyoutubeform">
-                            <input style="width:200px; float:left;" type="text" name="keyword" class="form-control" id="keyword" onkeydown="if (event.keyCode == 13) { searchyoutube(); return false; }" placeholder="Add from Youtube">
+                            <input style="width:420px; float:left;" type="text" name="keyword" class="form-control" id="keyword" onkeydown="if (event.keyCode == 13) { searchyoutube(); return false; }" placeholder="Add from Youtube">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" id="searchyoutubeform" type="button" onclick="searchyoutube()"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
@@ -50,8 +48,11 @@
                 </ul>
             </div>
             <div style="overflow:hidden; height:85vh; width:100%; padding-bottom:10px;">
-                <div id="jsgridcontainer2" style="float:left; width:25%; height:100%; padding-right:5px; ">
-                    <div style="height:100%;" id="jsGrid2"></div>
+                <div id="jsgridcontainer2" style="float:left; width:25%; height:95%; padding-right:5px;">
+                    <div style="height:95%; width:100%;" id="jsGrid2"></div>
+                    <div style="height:5%; width:100%;" id="addplaylist_button">
+                        <a id="addsong_button" class="btn gv_button" data-toggle="modal" data-target="#playlistModal" role="button"><span class="glyphicon glyphicon-plus"></span> Add new playlist</a>
+                    </div>
                 </div>
                 <div id="jsgridcontainer" style="float:left; width:75%; height:100%;">
                     <div style="height:100%;" id="jsGrid"></div>
@@ -79,7 +80,6 @@
                 <li style="width:10%;">
                     <a style="margin-top:4px;"><div id="volume_slider"></div></a>
                 </li>
-                <li><a id="fullscreenbutton" role="button" onclick="gofullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></a></li>
                 <li><a role="button" onclick="hideplayer()"><span class="glyphicon glyphicon-facetime-video"></span></a></li>
                 <li><a data-toggle="modal" data-target="#helpModal" role="button"><b>?</b></a></li>
             </ul>
