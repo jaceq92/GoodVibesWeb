@@ -172,49 +172,50 @@
   <ItemGroup>
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\ext_css_bundle.css" />
+    <Content Include="css\ext_css_bundle.min.css">
+      <DependentUpon>ext_css_bundle.css</DependentUpon>
+    </Content>
     <Content Include="css\GoodVibesStyles.css" />
     <Content Include="css\jquery-ui.css" />
     <Content Include="css\jsgrid-theme.min.css" />
     <Content Include="css\jsgrid.min.css" />
+    <Content Include="css\perfect-scrollbar.min.css" />
+    <Content Include="css\perfect-scrollbar.min.min.css">
+      <DependentUpon>perfect-scrollbar.min.css</DependentUpon>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="scripts\ai.0.22.9-build00167.js" />
-    <Content Include="scripts\ai.0.22.9-build00167.min.js" />
-    <Content Include="scripts\bootstrap.js" />
+    <Content Include="Resources\favicon.ico" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="bundleconfig.json" />
     <None Include="Properties\PublishProfiles\GoodVibesWeb.pubxml" />
+    <Content Include="scripts\ext_js_bundle.js" />
+    <Content Include="scripts\ext_js_bundle.min.js">
+      <DependentUpon>ext_js_bundle.js</DependentUpon>
+    </Content>
     <Content Include="scripts\GoodVibesLogin.js" />
     <Content Include="scripts\GoodVibesScript.js" />
     <Content Include="scripts\jquery-ui.js" />
+    <Content Include="scripts\jquery.noty.packaged.min.js" />
     <Content Include="scripts\js.cookie.js" />
-    <Content Include="scripts\jsgrid.core.js" />
-    <Content Include="scripts\jsgrid.field.checkbox.js" />
-    <Content Include="scripts\jsgrid.field.control.js" />
-    <Content Include="scripts\jsgrid.field.js" />
-    <Content Include="scripts\jsgrid.field.number.js" />
-    <Content Include="scripts\jsgrid.field.select.js" />
-    <Content Include="scripts\jsgrid.field.text.js" />
-    <Content Include="scripts\jsgrid.field.textarea.js" />
-    <Content Include="scripts\jsgrid.js" />
-    <Content Include="scripts\jsgrid.load-indicator.js" />
-    <Content Include="scripts\jsgrid.load-strategies.js" />
     <Content Include="scripts\jsgrid.min.js" />
-    <Content Include="scripts\jsgrid.sort-strategies.js" />
-    <Content Include="scripts\jsgrid.validation.js" />
-    <Content Include="scripts\modernizr-2.6.2.js" />
+    <Content Include="scripts\perfect-scrollbar.jquery.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\GV\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\GVController.cs" />
     <Compile Include="Controllers\SongDataController.cs" />
+    <Compile Include="Controllers\YoutubeDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -230,7 +231,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\GV\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -240,7 +241,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

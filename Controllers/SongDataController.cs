@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Net;
@@ -9,8 +10,7 @@ using GoodVibesWeb.Models;
 using System.Text;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
-using Google.Apis.YouTube.v3;
-using Google.Apis.Services;
+
 
 namespace GoodVibesWeb.Controllers
 {
@@ -19,41 +19,48 @@ namespace GoodVibesWeb.Controllers
         string sConn =
             ServerData.sconn;
 
-        [Route("api/getplaylists/{username}")]
+        [Route("api/getplaylists/{username}/")]
         [HttpGet]
         public HttpResponseMessage GetPlaylists(string username)
         {
             string result;
             List<Playlist> playlists = new List<Playlist>();
-
-            using (SqlConnection sc = new SqlConnection(sConn))
+            try
             {
-                sc.Open();
-                string sql = "SELECT playlist_id, playlist_name,deletable FROM dbo.playlists where username = @username or username = 'all_users' order by deletable, playlist_name";
-                SqlCommand com = new SqlCommand(sql, sc);
-                com.Parameters.AddWithValue("@username", username);
-
-                using (SqlDataReader reader = com.ExecuteReader())
+                using (SqlConnection sc = new SqlConnection(sConn))
                 {
-                    while (reader.Read())
+                    sc.Open();
+                    string sql = "SELECT playlist_id, playlist_name,deletable FROM dbo.playlists where username = @username or username = 'all_users' order by deletable, playlist_name";
+                    SqlCommand com = new SqlCommand(sql, sc);
+                    com.Parameters.AddWithValue("@username", username);
+
+                    using (SqlDataReader reader = com.ExecuteReader())
                     {
-                        Playlist plist = new Playlist();
-                        plist.playlist_id = reader["playlist_id"].ToString();
-                        plist.playlist_name = reader["playlist_name"].ToString();
-                        plist.deletable = (bool)reader["deletable"];
-                        playlists.Add(plist);
+                        while (reader.Read())
+                        {
+                            Playlist plist = new Playlist();
+                            plist.playlist_id = reader["playlist_id"].ToString();
+                            plist.playlist_name = reader["playlist_name"].ToString();
+                            plist.deletable = (bool)reader["deletable"];
+                            playlists.Add(plist);
+                        }
                     }
                 }
+
+                result = JsonConvert.SerializeObject(playlists);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(result, Encoding.UTF8, "application/json");
+                return response;
             }
-
-            result = JsonConvert.SerializeObject(playlists);
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
-            response.Content = new StringContent(result, Encoding.UTF8, "application/json");
-
-            return response;
+            catch
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                response.Content = new StringContent("Error occured while getting playlists, Refresh page!", Encoding.UTF8, "application/json");
+                return response;
+            }
         }
 
-        [Route("api/insertplaylist/{username}")]
+        [Route("api/insertplaylist/{username}/")]
         public HttpResponseMessage InsertPlaylist(Playlist p, string username)
         {
             try
@@ -68,134 +75,64 @@ namespace GoodVibesWeb.Controllers
                     com.ExecuteNonQuery();
                 }
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent("Playlist added!", Encoding.UTF8, "application/json");
                 return response;
             }
             catch
             {
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                response.Content = new StringContent("Error occured while inserting new playlist, try again!", Encoding.UTF8, "application/json");
                 return response;
             }
         }
 
-        [Route("api/getplaylist/{username}/{playlist_id}")]
+        [Route("api/getplaylist/{username}/{playlist_id}/")]
         [HttpGet]
         public HttpResponseMessage GetPlaylist(string username, int playlist_id)
         {
             string result;
             List<Song> playlist = new List<Song>();
 
-            using (SqlConnection sc = new SqlConnection(sConn))
+            try
             {
-                sc.Open();
-                string sql = "SELECT song_url, song_artist, song_name, creation_date, username FROM dbo.song_data where playlist_id = @playlist_id";
-                SqlCommand com = new SqlCommand(sql, sc);
-                com.Parameters.AddWithValue("@username", username);
-                com.Parameters.AddWithValue("@playlist_id", playlist_id);
-
-                using (SqlDataReader reader = com.ExecuteReader())
+                using (SqlConnection sc = new SqlConnection(sConn))
                 {
-                    while (reader.Read())
+                    sc.Open();
+                    string sql = "SELECT song_url, song_artist, song_name, creation_date, username FROM dbo.song_data where playlist_id = @playlist_id";
+                    SqlCommand com = new SqlCommand(sql, sc);
+                    com.Parameters.AddWithValue("@username", username);
+                    com.Parameters.AddWithValue("@playlist_id", playlist_id);
+
+                    using (SqlDataReader reader = com.ExecuteReader())
                     {
-                        Song song = new Song();
-                        song.song_url = reader["song_url"].ToString();
-                        song.song_artist = reader["song_artist"].ToString();
-                        song.song_name = reader["song_name"].ToString();
-                        DateTime dt = (DateTime)reader["creation_date"];
-                        song.date_created = dt.ToShortDateString();
-                        song.username = reader["username"].ToString();
-                        playlist.Add(song);
+                        while (reader.Read())
+                        {
+                            Song song = new Song();
+                            song.song_url = reader["song_url"].ToString();
+                            song.song_artist = reader["song_artist"].ToString();
+                            song.song_name = reader["song_name"].ToString();
+                            DateTime dt = (DateTime)reader["creation_date"];
+                            song.date_created = dt.ToShortDateString();
+                            song.username = reader["username"].ToString();
+                            playlist.Add(song);
+                        }
                     }
                 }
-            }
 
-            result = JsonConvert.SerializeObject(playlist);
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
-            response.Content = new StringContent(result, Encoding.UTF8, "application/json");
-
-            return response;
-        }
-
-        [Route("api/auth")]
-        [HttpPut]
-        public HttpResponseMessage Auth(User u)
-        {
-            try
-            {
-                string hashedpassword = sha256(u.password + ServerData.salt);
-                string passwordfromdb;
-
-                using (SqlConnection sc = new SqlConnection(sConn))
-                {
-                    sc.Open();
-                    string sql = "SELECT password from users where username = @username";
-                    SqlCommand com = new SqlCommand(sql, sc);
-                    com.Parameters.AddWithValue("@username", u.username);
-                    object o = com.ExecuteScalar();
-                    if (o != null)
-                        passwordfromdb = o.ToString();
-                    else
-                        passwordfromdb = "";
-                }
-
-                if (hashedpassword == passwordfromdb)
-                {
-                    HttpResponseMessage respMessage = new HttpResponseMessage();
-                    respMessage.Content = new ObjectContent<string[]>(new string[] { "Auth", "success" }, new JsonMediaTypeFormatter());
-                    CookieHeaderValue cookie = new CookieHeaderValue("username", u.username);
-                    cookie.Expires = DateTimeOffset.Now.AddDays(1);
-                    cookie.Domain = Request.RequestUri.Host;
-                    cookie.Path = "/";
-                    respMessage.Headers.AddCookies(new CookieHeaderValue[] { cookie });
-                    return respMessage;
-                }
-
-                else
-                {
-                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Forbidden);
-                    return response;
-                }
-            }
-            catch
-            {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest);
-                return response;
-            }
-        }
-
-
-        [Route("api/createuser")]
-        [HttpPost]
-        public HttpResponseMessage CreateUser(User u)
-        {
-            try
-            {
-                using (SqlConnection sc = new SqlConnection(sConn))
-                {
-                    sc.Open();
-                    string sql = "insert into users(username, password, email) values(@username, @password, @email)";
-                    SqlCommand com = new SqlCommand(sql, sc);
-                    com.Parameters.AddWithValue("@username", u.username);
-                    com.Parameters.AddWithValue("@password", sha256(u.password + "suola123666"));
-                    com.Parameters.AddWithValue("@email", u.email);
-                    com.ExecuteNonQuery();
-
-                    sql = "insert into playlists(playlist_name, username) values (@playlist_name, @username)";
-                    com = new SqlCommand(sql, sc);
-                    com.Parameters.AddWithValue("@playlist_name", "My Playlist");
-                    com.Parameters.AddWithValue("@username", u.username);
-                    com.ExecuteNonQuery();
-                }
+                result = JsonConvert.SerializeObject(playlist);
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(result, Encoding.UTF8, "application/json");
                 return response;
             }
             catch
             {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent("Error occured while getting playlist data, refresh page!", Encoding.UTF8, "application/json");
                 return response;
             }
         }
 
-        [Route("api/insertsong/{username}/{playlist_id}")]
+        [Route("api/insertsong/{username}/{playlist_id}/")]
         [HttpPost]
         public HttpResponseMessage Post(Song s, string username, int playlist_id)
         {
@@ -237,7 +174,6 @@ namespace GoodVibesWeb.Controllers
                             return response;
                         }
                     }
-
                     response = Request.CreateResponse(HttpStatusCode.OK);
                     response.Content = new StringContent("Song added", Encoding.UTF8, "application/json");
                     return response;
@@ -245,12 +181,13 @@ namespace GoodVibesWeb.Controllers
                 catch
                 {
                     response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                    response.Content = new StringContent("Error occured while adding song, try again!", Encoding.UTF8, "application/json");
                     return response;
                 }
             }
         }
 
-        [Route("api/deleteplaylist/{username}/{playlist_id}")]
+        [Route("api/deleteplaylist/{username}/{playlist_id}/")]
         [HttpDelete]
         public HttpResponseMessage DeletePlaylist(string username, string playlist_id)
         {
@@ -266,7 +203,6 @@ namespace GoodVibesWeb.Controllers
                     com.Parameters.AddWithValue("@username", username);
                     com.ExecuteNonQuery();
                 }
-
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent("Playlist deleted", Encoding.UTF8, "application/json");
 
@@ -275,11 +211,12 @@ namespace GoodVibesWeb.Controllers
             catch
             {
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                response.Content = new StringContent("Error occured while deleting playlist, try again!", Encoding.UTF8, "application/json");
                 return response;
             }
         }
 
-        [Route("api/deletesong/{username}/{song_url}/{playlist_id}")]
+        [Route("api/deletesong/{username}/{song_url}/{playlist_id}/")]
         [HttpDelete]
         public HttpResponseMessage Delete(string username, string song_url, int playlist_id)
         {
@@ -301,62 +238,12 @@ namespace GoodVibesWeb.Controllers
 
                 return response;
             }
-            catch
+            catch 
             {
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                response.Content = new StringContent("Error occured while deleting song, try again!", Encoding.UTF8, "application/json");
                 return response;
             }
         }
-
-        [Route("api/searchyoutube/{keyword}")]
-        [HttpGet]
-        public async System.Threading.Tasks.Task<HttpResponseMessage> SearchYoutube(string keyword)
-        {
-            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
-            {
-                ApiKey = ServerData.apikey,
-                ApplicationName = this.GetType().ToString()
-            });
-
-            var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = keyword;
-            searchListRequest.MaxResults = 50;
-
-            // Call the search.list method to retrieve results matching the specified query term.
-            var searchListResponse = await searchListRequest.ExecuteAsync();
-
-            List<Song> videos = new List<Song>();
-
-            // Add each result to the appropriate list, and then display the lists of
-            // matching videos, channels, and playlists.
-            foreach (var searchResult in searchListResponse.Items)
-            {
-                if (searchResult.Id.Kind == "youtube#video")
-                {
-                    Song s = new Song();
-                    s.title = searchResult.Snippet.Title;
-                    s.song_url = searchResult.Id.VideoId;
-                    videos.Add(s);
-                }
-            }
-
-            string result = JsonConvert.SerializeObject(videos);
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
-            response.Content = new StringContent(result, Encoding.UTF8, "application/json");
-
-            return response;
-        }
-
-        static string sha256(string password)
-        {
-            System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
-            System.Text.StringBuilder hash = new System.Text.StringBuilder();
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(password), 0, Encoding.UTF8.GetByteCount(password));
-            foreach (byte theByte in crypto)
-            {
-                hash.Append(theByte.ToString("x2"));
-            }
-            return hash.ToString();
-        }
-    }
+     }
 }

@@ -19,14 +19,6 @@ $(document).on('hide.bs.modal', '#addsongModal', function () {
 });
 
 
-//$(document).ready(function () {
-//    $(window).keydown(function (event) {
-//        if (event.keyCode == 13) {
-//            event.preventDefault();
-//            return false;
-//        }
-//    });
-//});
 
 $(function () {
     $("#volume_slider").slider(
@@ -48,11 +40,16 @@ $(function () {
     $('#playercontainer').hide();
     $('#fullscreenbutton').hide();
     $('body').hide().fadeIn('slow');
-
+   
     if (typeof Cookies.get('username') == 'undefined') {
-        window.location.replace("../Home/");
+        window.location.replace("../GV/");
         alert('Sign in or register to use GoodVibes');
     }
+});
+
+$(window).load(function () {
+    $('.jsgrid-grid-body').perfectScrollbar();
+    $('body').perfectScrollbar();
 });
 
 $(function () {
@@ -65,16 +62,20 @@ $(function () {
       
         e.preventDefault();
         $.ajax({
-            url: "../api/insertsong/" + Cookies.get("username") + "/" + row2[0].firstChild.innerText,
+            url: "../api/insertsong/" + Cookies.get("username") + "/" + row2[0].firstChild.innerText + "/",
             type: "POST",
             data: $("#addsongform").serialize(),
             dataType: "text",
-            success: function (data) {
+            success: function (data, status, jqXHR) {
                 $("#jsGrid").jsGrid("loadData").done(function () {
+                    var responsetext = jqXHR.responseText;
+                    noty({ text: responsetext, type: 'success', layout: 'topCenter', timeout: 3000 });
                     $('#addsongModal').modal('hide');
                 });
             },
-            error: function (data) {
+            error: function (res) {
+                var responsetext = res.responseText;
+                noty({ text: responsetext, type: 'error', layout: 'topCenter', timeout: 3000 });
             }
         });
     });
@@ -91,18 +92,22 @@ $(function () {
 
         e.preventDefault();
         $.ajax({
-            url: "../api/insertplaylist/" + Cookies.get("username"),
+            url: "../api/insertplaylist/" + Cookies.get("username") + "/",
             type: "POST",
             data: $("#addplaylistform").serialize(),
             dataType: "text",
-            success: function (data) {
+            success: function (data, status, jqXHR) {
                 $("#jsGrid2").jsGrid("loadData").done(function () {
+                    var responsetext = jqXHR.responseText;
+                    noty({ text: responsetext, type: 'success', layout: 'topCenter', timeout: 3000 });
                     $('#playlistModal').modal('hide');
                     var rows = $("#jsGrid2.jsgrid-row, #jsGrid2.jsgrid-alt-row")
                     rows[rowindex].className += ' selected-row';
                 });
             },
-            error: function (data) {
+            error: function (res) {
+                var responsetext = res.responseText;
+                noty({ text: responsetext, type: 'error', layout: 'topCenter', timeout: 3000 });
             }
         });
     });
@@ -111,19 +116,8 @@ $(function () {
 function logout()
 {
     $.when(Cookies.remove('username', { path: '/', domain: 'goodvibesweb.azurewebsites.net' })).then(function () {
-        window.location.replace("../Home/");    });        
+        window.location.replace("../GV/");    });        
 }
-
-
-//function gofullscreen() {
-//    //var $ = document.querySelector.bind(document);
-//    //var playerElement = $('#player');
-//    //var requestFullScreen = playerElement.requestFullScreen || playerElement.mozRequestFullScreen || playerElement.webkitRequestFullScreen;
-//    //if (requestFullScreen) {
-//    //    requestFullScreen.bind(playerElement)();
-//    //}
-//}
-
 
 function togglemute() {
     if (player.isMuted()) {
@@ -262,7 +256,7 @@ function searchyoutube() {
                     var res = keyword.replace(" ", "%20");
                     return $.ajax({
                         type: "GET",
-                        url: "../api/searchyoutube/" + res,
+                        url: "../api/searchyoutube/" + res + "/",
                         dataType: "json",
                     })
                 },
@@ -309,9 +303,10 @@ $(function () {
         controller: {
             loadData: function () {
                 var username = Cookies.get("username");
+
                 return $.ajax({
                     type: "GET",
-                    url: "../api/getplaylists/" + username,
+                    url: "../api/getplaylists/" + username + "/",
                     dataType: "json",
                 })
             },
@@ -323,18 +318,20 @@ $(function () {
             }
 
             return $.ajax({
-                url: "../api/deleteplaylist/" + Cookies.get("username") + "/" + item.playlist_id,
+                url: "../api/deleteplaylist/" + Cookies.get("username") + "/" + item.playlist_id + "/",
                 type: "DELETE",
                 dataType: "text",
-                success: function (data) {
+                success: function (data, status, jqXHR) {
                     $("#jsGrid2").jsGrid("loadData").done(function () {
+                        var responsetext = jqXHR.responseText;
+                        noty({ text: responsetext, type: 'success', layout: 'topCenter', timeout: 3000 });
                         var rows = $("#jsGrid2.jsgrid-row, #jsGrid2.jsgrid-alt-row")
                         rows[rowindex].className += ' selected-row';
                     });
-
                 },
-                error: function (data) {
-                    alert("Song delete failed");
+                error: function (res) {
+                    var responsetext = res.responseText;
+                    noty({ text: responsetext, type: 'error', layout: 'topCenter', timeout: 3000 });
                 }
             });
         },
@@ -363,7 +360,7 @@ $(function () {
         width: "100%",
         sorting: true,
         paging: false,
-
+        confirmDeleting: false,
         autoload: true,
         noDataContent: "Add a song and start listening!",
         rowClick: function (args) {
@@ -387,9 +384,10 @@ $(function () {
                 var row = $("#jsGrid2 .selected-row:first");
 
                 var username = Cookies.get("username");
+                var res = username.replace(".", "%2E");
                 return $.ajax({
                     type: "GET",
-                    url: "../api/getplaylist/" + username + "/" + row[0].firstChild.innerText,
+                    url: "../api/getplaylist/" + res + "/" + row[0].firstChild.innerText + "/",
                     dataType: "json",
                 })
             },
@@ -401,18 +399,21 @@ $(function () {
                 var row = $("#jsGrid2 .selected-row:first");
 
                 return $.ajax({
-                    url: "../api/deletesong/" + Cookies.get("username") + "/" + item.song_url + "/" + row[0].firstChild.innerText,
+                    url: "../api/deletesong/" + Cookies.get("username") + "/" + item.song_url + "/" + row[0].firstChild.innerText + "/",
                     type: "DELETE",
                     dataType: "text",
-                    success: function (data) {
+                    success: function (data, status, jqXHR) {
                         $("#jsGrid").jsGrid("loadData").done(function () {
+                            var responsetext = jqXHR.responseText;
+                            noty({ text: responsetext, type: 'success', layout: 'topCenter', timeout: 3000 });
                             var rows = $(".jsgrid-row, .jsgrid-alt-row")
                             rows[rowindex].className += ' selected-row';
                         });
 
                     },
-                    error: function (data) {
-                        alert("Song delete failed");
+                    error: function (res) {
+                        var responsetext = res.responseText;
+                        noty({ text: responsetext, type: 'error', layout: 'topCenter', timeout: 3000 });
                     }
                 });
             }

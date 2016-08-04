@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/icon" href="../Resources/favicon.ico" />
+    <title>GoodVibes</title>
+    <link rel="stylesheet" type="text/css" href="../css/GoodVibesStyles.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/ext_css_bundle.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="../scripts/ext_js_bundle.js"></script>
+    <script src="../scripts/GoodVibesScript.js"></script>
+</head>
+<body>
+    <div id="gv_content" style="overflow:hidden;">
+        <div>
+            <div class="navbar navbar-default" style="height:5%; width:100%;">
+                <ul class="nav navbar-nav">
+                    <li style="width:500px;">
+                        <form class="navbar-form" name="searchyoutubeform" id="searchyoutubeform">
+                            <input style="width:420px; float:left;" type="text" name="keyword" class="form-control" id="keyword" onkeydown="if (event.keyCode == 13) { searchyoutube(); return false; }" placeholder="Add from Youtube">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" id="searchyoutubeform" type="button" onclick="searchyoutube()"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </form>
+                    </li>
+                    <li style="width:100px; float:right;"><a role="button" onclick="logout()">Log Out</a></li>
+                </ul>
+            </div>
+            <div style="overflow:hidden; height:85vh; width:100%; padding-bottom:10px;">
+                <div id="jsgridcontainer2" style="float:left; width:25%; height:95%; padding-right:5px;">
+                    <div style="height:95%; width:100%;" id="jsGrid2"></div>
+                    <div style="height:5%; width:100%;" id="addplaylist_button">
+                        <a id="addsong_button" class="btn gv_button" data-toggle="modal" data-target="#playlistModal" role="button"><span class="glyphicon glyphicon-plus"></span> Add new playlist</a>
+                    </div>
+                </div>
+                <div id="jsgridcontainer" style="float:left; width:75%; height:100%;">
+                    <div id="jsGrid"></div>
+                </div>
+                <div id="playercontainer" style="float:right; height:100%;">
+                    <div style="height:100%;" id="player"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar navbar-default" style="height:5%; width:100%;">
+        <div>
+            <ul class="nav navbar-nav">
+                <li style="width:25%;"><a style="max-width:100%; overflow:hidden; text-overflow: ellipsis; white-space: nowrap;"><span id="nowplaying"></span></a></li>
+                <li><a role="button" onclick="playprevioussong()"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                <li><a role="button" onclick="toggleplay()"><span id="playtoggle" class="glyphicon glyphicon-play"></span></a></li>
+                <li><a role="button" onclick="playnextsong()"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+                <li><a><span class="glyphiconstyle" id="currenttime">0:00</span></a></li>
+                <li style="width:30%;">
+                    <a style="margin-top:4px;"><div id="progress_slider"></div></a>
+                </li>
+                <li><a><span class="glyphiconstyle" id="totaltime"></span></a></li>
+                <li><a role="button" onclick="togglemute()"><span id="togglemute" class="glyphicon glyphicon-volume-up"></span></a></li>
+                <li style="width:10%;">
+                    <a style="margin-top:4px;"><div id="volume_slider"></div></a>
+                </li>
+                <li><a role="button" onclick="hideplayer()"><span class="glyphicon glyphicon-facetime-video"></span></a></li>
+                <li><a data-toggle="modal" data-target="#helpModal" role="button"><b>?</b></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addsongModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add a song<span id="youtube_title"> </span></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="addsongform" name="addsongform" id="addsongform" method="post" role="form">
+                        <div class="form-group">
+                            <input type="text" name="song_url" class="form-control" id="song_url_field" placeholder="Enter youtube videoid (youtube.com/watch?v=tPEE9ZwTmy0 the part after ?v=)">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="song_artist" class="form-control" id="song_artist_field" placeholder="Enter song artist" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="song_name" class="form-control" id="song_name_field" placeholder="Enter song name" required>
+                        </div>
+                        <button type="submit" id="addsongform" class="btn btn-default">Add song</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="helpModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">About</h2>
+                </div>
+                <div style="padding-left: 15px!important; padding: 0px;" class="modal-body">
+                    <h2>GoodVibes Project</h2>
+                    <p>This project was created to be an easy way to keep track of all your favourite songs in Youtube. I felt that Youtubes user interface wasn't good and it was really not enjoyable to use.
+                    I also wanted a place where I could keep all my music in one place. Hinting Soundcloud integration.</p>
+                    <h2>Features:</h2>
+                    <dl>
+                        <dt>Search and add from Youtube</dt>
+                        <dd> typing a keyword to the textbox on the top right corner of the page you can search from youtube videos in a custom made search window. By double clicking a song a popup appears and waits for you to confirm the song information.</dd>
+                        <dt>Toggle video</dt>
+                        <dd>In the bottom right corner of the page is a small videocamera icon. When you click it the video slides visible.</dd>
+                        <dt>Go fullscreen</dt>
+                        <dd>Double click the video</dd>
+                        <dt>Featured playlist</dt>
+                        <dd>This is a playlist that is visible for all users on goodvibes. Everybody can add tracks to it and listen to them. Deleting is only possible by the user who has added the track originally</dd>
+                    </dl>
+                    <h4>If you have questions or ideas about the site, contact me jarkko92@gmail.com</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="playlistModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add a playlist</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="addplaylistform" name="addplaylistform" id="addplaylistform" method="post" role="form">
+                        <div class="form-group">
+                            <input type="text" name="playlist_name" class="form-control" id="playlist_name" placeholder="Playlist name" required>
+                        </div>
+                        <button type="submit" id="addsongform" class="btn btn-default">Add playlist</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="searchyoutubeModal" style="height:100%;" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:black;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 style="color:white;" class="modal-title">Search from Youtube</h4>
+                </div>
+                <div class="modal-body" style="background-color:#0e0d0d;">
+                    <div id="jsgridcontainer3" style="height:100%;">
+                        <div id="jsGrid3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
