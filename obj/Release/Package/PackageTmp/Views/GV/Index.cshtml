@@ -36,21 +36,22 @@
     <div class="navbar navbar-default" style="height:5vh; width:100%;">
         <div>
             <ul class="nav navbar-nav">
-                <li style="width:25%;"><a style="max-width:100%; overflow:hidden; text-overflow: ellipsis; white-space: nowrap;"><span id="nowplaying"></span></a></li>
+                <li style="width:25%;"><a class="unselectable" style="cursor:default; color:lawngreen !important; max-width:100%; overflow:hidden; text-overflow: ellipsis; white-space: nowrap;"><span id="nowplaying"></span></a></li>
                 <li><a role="button" onclick="playprevioussong()"><span class="glyphicon glyphicon-step-backward"></span></a></li>
                 <li><a role="button" onclick="toggleplay()"><span id="playtoggle" class="glyphicon glyphicon-play"></span></a></li>
                 <li><a role="button" onclick="playnextsong()"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-                <li><a><span class="glyphiconstyle" id="currenttime">0:00</span></a></li>
+                <li><a class="unselectable" style="cursor:default; width:5%; padding-right:0px;"><span class="glyphiconstyle" id="currenttime">0:00</span></a></li>
                 <li style="width:30%;">
                     <a style="margin-top:4px;"><div id="progress_slider"></div></a>
                 </li>
-                <li><a><span class="glyphiconstyle" id="totaltime"></span></a></li>
-                <li><a role="button" onclick="togglemute()"><span id="togglemute" class="glyphicon glyphicon-volume-up"></span></a></li>
-                <li style="width:10%;">
+                <li><a class="unselectable" style="cursor:default; width:5%; padding-left:0px;"><span class="glyphiconstyle" id="totaltime"></span></a></li>
+
+                <li style="float:right !important;"><a data-toggle="modal" data-target="#helpModal" role="button"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+                <li style="float:right !important;"><a role="button" onclick="hideplayer()"><span class="glyphicon glyphicon-facetime-video"></span></a></li>
+                <li style="width:10%; float:right !important;">
                     <a style="margin-top:4px;"><div id="volume_slider"></div></a>
                 </li>
-                <li><a role="button" onclick="hideplayer()"><span class="glyphicon glyphicon-facetime-video"></span></a></li>
-                <li><a data-toggle="modal" data-target="#helpModal" role="button"><b>?</b></a></li>
+                <li style="float:right!important;"><a role="button" onclick="togglemute()"><span id="togglemute" class="glyphicon glyphicon-volume-up"></span></a></li>
             </ul>
         </div>
     </div>

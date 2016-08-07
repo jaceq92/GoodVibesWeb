@@ -6,9 +6,11 @@
 
 html {
     height: 100%;
+    overflow:hidden;
 }
 
 body { 
+    overflow:hidden;
     height: 100%;
     padding: 10px;
     color: #262626;
@@ -24,10 +26,12 @@ table {
     height:50%; 
     width:65%;
 }
-.jsgrid-header-row > .jsgrid-header-cell {
-    background:#101010 !important;
+#jsGrid .jsgrid-header-row > .jsgrid-header-cell {
+    text-align:left !important;
 }
-
+.jsgrid-header-row > .jsgrid-header-cell {
+        background:#101010 !important;
+}
 .jsgrid-edit-row > .jsgrid-cell, .jsgrid-filter-row > .jsgrid-cell, .jsgrid-grid-header, .jsgrid-header-row > .jsgrid-header-cell, .jsgrid-insert-row > .jsgrid-cell {
     border-color: black !important;
     color:white;
@@ -40,6 +44,12 @@ table {
         position:relative!important;
         overflow-y: auto !important;
         overflow-x:hidden !important;
+        -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .jsgrid-header-scrollbar::-webkit-scrollbar-track {
@@ -49,6 +59,9 @@ table {
 {
         min-height:30px;
         max-height:35px;
+}
+.jsgrid-cell{
+    border:none !important;
 }
 
 .navbar-collapse.collapse {
@@ -82,9 +95,11 @@ a {
 }
 ul {
     width:100%;
+    display:inline-block;
 }
 li {
-    width:3.5%;
+    width:3%;
+    align-content:center;
 }
 
 .gv_button
@@ -93,7 +108,7 @@ li {
     background-image: -o-linear-gradient(top,#101010 0,#101010 100%) !important;
     background-image: -webkit-gradient(linear,left top,left bottom,from(#101010),to(#101010)) !important;
     background-image: linear-gradient(to bottom,#101010 0,#101010 100%) !important;    
-    border: 1px solid white !important;
+    border:none !important;
     width:100% !important;
     height:100%;
     max-height: 35px;
@@ -101,6 +116,7 @@ li {
 }
 
 .navbar-default {
+    border:none !important;
     height:20px !important;
     background-image: -webkit-linear-gradient(top,#101010 0,#101010 100%) !important;
     background-image: -o-linear-gradient(top,#101010 0,#101010 100%) !important;
@@ -198,7 +214,6 @@ iframe[name='demo'] {
 }
 
 .gv_navbar {
-    border: 1px solid white !important;
     height: 4vh;
     width: 100%; 
     overflow:hidden;
@@ -206,6 +221,7 @@ iframe[name='demo'] {
     display:flex;
     max-height:35px;
     align-items: center;
+    border-radius:4px;
 }
 a:hover { 
     color: lawngreen !important;
@@ -213,3 +229,23 @@ a:hover {
 input[type=search]{
   border-radius:5px;
 }
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+	background: lawngreen !important;
+    color:lawngreen!important;
+    border-radius:10px !important;
+}
+.ui-slider-handle {
+    outline: none;
+    border-radius:10px !important;
+}
+.ui-state-active {
+    outline:none !important;
+    border: 1px solid lawngreen !important;
+    border-radius:10px !important;
+}
+.ui-slider a {outline:none;}
