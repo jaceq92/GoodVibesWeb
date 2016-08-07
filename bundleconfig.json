@@ -6,17 +6,6 @@
     ]
   },
   {
-    "outputFileName": "css/ext_css_bundle.css",
-    "inputFiles": [
-      "css/perfect-scrollbar.min.css",
-      "css/jsgrid.min.css",
-      "css/jsgrid-theme.min.css",
-      "css/jquery-ui.css",
-      "css/bootstrap.min.css",
-      "css/bootstrap-theme.min.css"
-    ]
-  },
-  {
     "outputFileName": "scripts/ext_js_bundle.js",
     "inputFiles": [
       "scripts/perfect-scrollbar.jquery.js",
@@ -25,6 +14,28 @@
       "scripts/jquery.noty.packaged.min.js",
       "scripts/jquery-ui.js",
       "scripts/bootstrap.min.js"
+    ]
+  },
+  {
+    "outputFileName": "bundles/ext_css_bundle.css",
+    "inputFiles": [
+      "css/bootstrap-theme.min.css",
+      "css/bootstrap.min.css",
+      "css/jquery-ui.css",
+      "css/jsgrid-theme.min.css",
+      "css/jsgrid.min.css",
+      "css/perfect-scrollbar.min.css"
+    ]
+  },
+  {
+    "outputFileName": "bundles/ext_js_bundle.js",
+    "inputFiles": [
+      "scripts/bootstrap.min.js",
+      "scripts/jquery-ui.js",
+      "scripts/jquery.noty.packaged.min.js",
+      "scripts/js.cookie.js",
+      "scripts/jsgrid.min.js",
+      "scripts/perfect-scrollbar.jquery.js"
     ]
   }
 ]

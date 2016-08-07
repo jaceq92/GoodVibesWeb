@@ -170,10 +170,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bundles\ext_js_bundle.js" />
+    <Content Include="bundles\ext_js_bundle.min.js">
+      <DependentUpon>ext_js_bundle.js</DependentUpon>
+    </Content>
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.min.css" />
-    <Content Include="css\ext_css_bundle.css" />
-    <Content Include="css\ext_css_bundle.min.css">
+    <Content Include="bundles\ext_css_bundle.css" />
+    <Content Include="bundles\ext_css_bundle.min.css">
       <DependentUpon>ext_css_bundle.css</DependentUpon>
     </Content>
     <Content Include="css\GoodVibesStyles.css" />
@@ -186,12 +190,16 @@
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="mobile_css\bootstrap-theme.css" />
+    <Content Include="mobile_css\bootstrap.css" />
+    <Content Include="mobile_css\gv_mobile.css" />
     <Content Include="Resources\favicon.ico" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="bundleconfig.json" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\GoodVibesWeb.pubxml" />
     <Content Include="scripts\ext_js_bundle.js" />
     <Content Include="scripts\ext_js_bundle.min.js">
@@ -232,6 +240,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\GV\Login.cshtml" />
+    <Content Include="Views\GV\Mobile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -18,8 +18,6 @@ $(document).on('hide.bs.modal', '#addsongModal', function () {
     $("#youtube_title").text(" ");
 });
 
-
-
 $(function () {
     $("#volume_slider").slider(
         {
@@ -39,7 +37,6 @@ $(function () {
 $(function () {
     $('#playercontainer').hide();
     $('#fullscreenbutton').hide();
-    $('body').hide().fadeIn('slow');
    
     if (typeof Cookies.get('username') == 'undefined') {
         window.location.replace("../GV/");
@@ -49,7 +46,12 @@ $(function () {
 
 $(window).load(function () {
     $('.jsgrid-grid-body').perfectScrollbar();
-    $('body').perfectScrollbar();
+    $('.modal-body').perfectScrollbar();
+
+});
+
+$(document).ready(function () {
+    $('body.hide').fadeIn(1000).removeClass('hide');
 });
 
 $(function () {
@@ -115,7 +117,7 @@ $(function () {
 
 function logout()
 {
-    $.when(Cookies.remove('username', { path: '/', domain: 'goodvibesweb.azurewebsites.net' })).then(function () {
+    $.when(Cookies.remove('username', { path: '/', domain: '.www.gvsound.net' })).then(function () {
         window.location.replace("../GV/");    });        
 }
 
@@ -161,7 +163,6 @@ function hideplayer() {
 
     var rowindex = row[0].rowIndex;
     var rowindex2 = row2[0].rowIndex;
-
 
     if ($('#playercontainer').is(':hidden')) {
         $("#addsong_button").fadeOut(250, function () {
@@ -353,7 +354,6 @@ $(function () {
         ]
     });
 });
-
 $(function () {
     $("#jsGrid").jsGrid({
         height: "100%",
@@ -373,8 +373,8 @@ $(function () {
         rowDoubleClick: function (args) {
             var $row = this.rowByItem(args.item);
             var val = $row["song_url"];
-            $("#jsGrid tr").removeClass("selected-row")
-            $("#jsGrid tr").removeClass("highlighted-row")
+            $('#jsGrid .selected-row').removeClass('selected-row');
+            $('#jsGrid .highlighted-row').removeClass('highlighted-row');
             $row.addClass("selected-row");
             player.loadVideoById(args.item.song_url, 0, 'large');
         },
@@ -382,14 +382,14 @@ $(function () {
         controller: {
             loadData: function () {
                 var row = $("#jsGrid2 .selected-row:first");
-
-                var username = Cookies.get("username");
-                var res = username.replace(".", "%2E");
-                return $.ajax({
-                    type: "GET",
-                    url: "../api/getplaylist/" + res + "/" + row[0].firstChild.innerText + "/",
-                    dataType: "json",
-                })
+                if (row[0] != undefined) {
+                    var username = Cookies.get("username");
+                    return $.ajax({
+                        type: "GET",
+                        url: "../api/getplaylist/" + username + "/" + row[0].firstChild.innerText + "/",
+                        dataType: "json",
+                    })
+                }
             },
             deleteItem: function (item) {
                 var row = $("#jsGrid.selected-row:first");
@@ -442,12 +442,12 @@ $(function () {
 
 
 var tag = document.createElement('script');
-
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 var player;
+var mytimer;
+
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         height: '100%',

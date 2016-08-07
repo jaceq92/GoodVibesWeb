@@ -17,5 +17,9 @@ namespace GoodVibesWeb.Controllers
         {
             return View();
         }
+        public ActionResult Mobile()
+        {
+            return View();
+        }
     }
 }

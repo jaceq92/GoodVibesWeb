@@ -5,12 +5,13 @@
     <link rel="icon" type="image/icon" href="../Resources/favicon.ico" />
     <title>GoodVibes</title>
     <link rel="stylesheet" type="text/css" href="../css/GoodVibesStyles.css" />
-    <link rel="stylesheet" type="text/css" href="~/css/ext_css_bundle.css" />
+    <link rel="stylesheet" type="text/css" href="~/bundles/ext_css_bundle.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="../scripts/ext_js_bundle.js"></script>
+    <script src="../bundles/ext_js_bundle.js"></script>
     <script src="../scripts/GoodVibesLogin.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
-<body style="font-family:Consolas;">
+<body style="font-family:Consolas; height: 100vh; min-width:1000px;">
     @*Created by Jarkko Skyttälä*@
     <div style="background-color: white; padding:20px; width: 25%; margin: auto; margin-top:7.5%;">
         <h1>GoodVibes Project</h1>
@@ -31,69 +32,64 @@
     <div style="background-color: white; padding:20px; width: 25%; margin: auto; margin-top:1%;">
             <h3>About GoodVibes</h3>
         <p>
-            GoodVibes is a music portal for everybody who is tired of the clunky user interface of Youtube. In GoodVibes you can use Youtube content as if it was an app like Spotify.
-            To get started you only have to <b>register</b> and <b>log in</b>!
+            Coming Soon, meanwhile just <b>register</b> and <b>log in</b>!
         </p>
     </div>
-
-    <div class="navbar navbar-default navbar-fixed-bottom" style="margin-bottom:0px!important;">
-        <div>
-            <ul style="height:100%;" class="list-inline nav navbar-nav">
-            </ul>
-        </div>
+    <div style="background-color: white; padding:20px; width: 25%; margin: auto; margin-top:1%;">
+        <p>This site is designed to work best on Google Chrome browser. Using another browser might not give you the best user experience</p>
     </div>
-
-    <div class="modal fade" id="registerModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Register</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="registerform">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Username</label>
-                            <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password (Must be atleast 6 characters long)</label>
-                            <input type="password" class="form-control" name="password" id="registerpassword" pattern=".{6,}" placeholder="Password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="VerifyPassword">Verify password</label>
-                            <input type="password" class="form-control" name="verifypassword" id="verifypassword" placeholder="Repeat password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-                        </div>
-                        <button type="submit" class="btn btn-default">Register</button>
-                    </form>
+        <div class="modal fade" id="registerModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Register</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="registerform">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Username</label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password (Must be atleast 6 characters long)</label>
+                                <input type="password" class="form-control" name="password" id="registerpassword" pattern=".{6,}" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="VerifyPassword">Verify password</label>
+                                <input type="password" class="form-control" name="verifypassword" id="verifypassword" placeholder="Repeat password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                            </div>
+                            <div class="g-recaptcha" data-sitekey="6Lcr-yYTAAAAADUL4R8TqIDSBW-KdNm6yjt-JsVu"></div>
+                            <button type="submit" style="margin-top:5px;" class="btn btn-default">Register</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="forgotpasswordModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Forgot password?</h4>
+        <div class="modal fade" id="forgotpasswordModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Forgot password?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="registerform">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Enter your accounts email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Email">
+                            </div>
+                            <button type="submit" class="btn btn-default">Send password</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form id="registerform">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Enter your accounts email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Email">
-                        </div>
-                        <button type="submit" class="btn btn-default">Send password</button>
-                    </form>
-                </div>
+
             </div>
-
         </div>
-    </div>
 </body>
 </html>
