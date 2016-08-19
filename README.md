@@ -6,9 +6,9 @@ I decided to move forward with this project with Angular 2. Although I kept the 
 
 New repositories:
 
-https://github.com/jaceq92/gvSound_angular Frontend (Angular 2)
-https://github.com/jaceq92/gvSound_backend Backend (.net 4.6 web api)
+- https://github.com/jaceq92/gvSound_angular Frontend (Angular 2)
+- https://github.com/jaceq92/gvSound_backend Backend (.net 4.6 web api)
 
-Demo of the new App: http://gvdev.azurewebsites.net/ (19.8.2016)
+- Demo of the new App: http://gvdev.azurewebsites.net/ (19.8.2016)
 
 - Jarkko Skyttälä 19.8.2016
